@@ -4,7 +4,6 @@ import { IconReport, IconSettings } from "@tabler/icons-react";
 
 import App from "./pages/app/App";
 import News from "./pages/app/News";
-import Article from "./pages/app/article/Article";
 
 const homePages: (RouteObject & {
   name: string;
@@ -14,12 +13,6 @@ const homePages: (RouteObject & {
     path: "/news",
     Component: News,
     name: "News",
-    icon: IconReport,
-  },
-  {
-    path: "/articles",
-    Component: Article,
-    name: "Article",
     icon: IconReport,
   },
 ];
@@ -37,14 +30,6 @@ const router = createBrowserRouter([
         path: route.path,
         Component: route.Component,
       })),
-      {
-        path: "/news/:genre",
-        Component: News,
-      },
-      {
-        path: "/articles/:genre",
-        Component: Article,
-      },
     ],
   },
 ]);

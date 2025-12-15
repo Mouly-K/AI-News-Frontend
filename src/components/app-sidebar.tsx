@@ -28,7 +28,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <NavLink to="/">
                 <IconInnerShadowTop className="size-5!" />
-                <span className="text-base font-semibold">FFEstimator</span>
+                <span className="text-base font-semibold">AI News</span>
               </NavLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -38,12 +38,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={sidebarRoutes.navMain} />
         <NavSecondary items={sidebarRoutes.navSecondary} className="mt-auto" />
       </SidebarContent>
-      {/*<SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>*/}
     </Sidebar>
   );
 }

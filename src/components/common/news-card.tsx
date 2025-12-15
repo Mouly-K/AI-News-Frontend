@@ -1,4 +1,3 @@
-import { NavLink } from "react-router";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -14,11 +13,17 @@ export default function NewsCard({
   pubDate,
   readTime,
   source,
-}: RssItem & { source: { title: string; url: string; image: string } }) {
+  onClick,
+}: RssItem & {
+  source: { title: string; url: string; image: string };
+  onClick: () => void;
+}) {
+  const sourceHostname = new URL(source.url).hostname;
+
   return (
-    <NavLink
-      className="block rounded-xl border hover:shadow-md transition-shadow"
-      to={`/articles/?url=${encodeURIComponent(link)}`}
+    <div
+      className="cursor-pointer block rounded-xl border hover:shadow-md transition-shadow"
+      onClick={onClick}
     >
       <div className="p-2">
         <img
@@ -35,13 +40,17 @@ export default function NewsCard({
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Avatar className="h-9 w-9">
-              <AvatarImage src={source.image} alt={source.title} />
+              <AvatarImage
+                className="object-contain"
+                src={`https://icon.horse/icon/${sourceHostname}`}
+                alt={`https://icons.duckduckgo.com/ip2/${sourceHostname}.ico`}
+              />
             </Avatar>
             <span className="text-sm font-medium">{source.title}</span>
           </div>
           <Badge variant="secondary">{readTime} Read</Badge>
         </div>
       </div>
-    </NavLink>
+    </div>
   );
 }

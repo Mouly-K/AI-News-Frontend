@@ -12,12 +12,15 @@ import type { Category } from "@/types/category";
 import categoriesData from "@/data/categories.json";
 import { CategoryFilter } from "@/components/category-filter";
 import { useSettings } from "@/providers/settings/helpers";
+import Article from "./article/Article";
 
 export default function News() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+  // Maintain modal states/data separately to prevent unnecessary re-renders
+  const [articleOpen, setArticleOpen] = useState(false);
+  const [articleUrl, setArticleUrl] = useState<string | null>(null);
   const { settings } = useSettings();
-
   // No manual memoization required with React compiler yay
   const feedQueries = useRssFeeds(settings.feeds);
 
@@ -54,10 +57,19 @@ export default function News() {
                 url: data.link,
                 image: data.image,
               }}
+              onClick={() => {
+                setArticleUrl(item.link);
+                setArticleOpen(true);
+              }}
             />
           ));
         })}
       </div>
+      <Article
+        url={articleUrl}
+        isOpen={articleOpen}
+        setIsOpen={setArticleOpen}
+      />
     </>
   );
 }
