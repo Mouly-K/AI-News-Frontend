@@ -12,7 +12,7 @@ export async function fetchRssFeed(feedUrl: string) {
   const BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
   try {
     const feed = await fetch(
-      `${BASE_URL}rss?url=${encodeURIComponent(feedUrl)}`,
+      `${BASE_URL}/rss?url=${encodeURIComponent(feedUrl)}`,
       {
         mode: "cors",
         method: "GET",

@@ -4,7 +4,7 @@ import { RouterProvider } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import { SettingsProvider } from "./providers/settings/setttings-provider";
+import ContextProvider from "@/providers";
 
 import "./index.css";
 
@@ -16,9 +16,9 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <SettingsProvider>
+      <ContextProvider>
         <RouterProvider router={router} />
-      </SettingsProvider>
+      </ContextProvider>
       <ReactQueryDevtools />
     </QueryClientProvider>
   </StrictMode>,

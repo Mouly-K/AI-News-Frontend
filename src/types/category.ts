@@ -1,5 +1,4 @@
 export type Category = {
-  id: string;
+  id: bigint;
   name: string;
-  icon?: React.ComponentType<{ className?: string }>;
 };

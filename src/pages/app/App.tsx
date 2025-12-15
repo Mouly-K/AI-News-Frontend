@@ -1,8 +1,12 @@
-import { Outlet } from "react-router";
-
-import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SiteHeader } from "@/components/site-header";
+import Article from "@/components/article/article";
+
+import News from "@/pages/app/news";
+
+import { Settings } from "@/components/settings/settings";
 
 export default function App() {
   return (
@@ -16,9 +20,12 @@ export default function App() {
     >
       <AppSidebar variant="inset" />
       <SidebarInset>
-        <Outlet />
+        <SiteHeader />
+        <News />
         <Toaster position="top-right" />
       </SidebarInset>
+      <Article />
+      <Settings />
     </SidebarProvider>
   );
 }

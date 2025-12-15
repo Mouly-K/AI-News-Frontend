@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { initialState, SettingsProviderContext } from "./helpers";
 
-import type { SettingsProviderProps } from "@/types/settings";
+import type { SettingsProviderProps } from "@/types/providers/settings";
 
 import { THEMES, type Settings } from "@/types/settings";
+import { fetchFeeds } from "@/lib/api-feeds";
+import { fetchCategories } from "@/lib/api-categories";
 
 export function SettingsProvider({
   children,
@@ -11,10 +13,35 @@ export function SettingsProvider({
   storageKey = "vite-ui-settings",
   ...props
 }: SettingsProviderProps) {
-  const [settings, setSettings] = useState<Settings>(() => ({
+  const [settings, setSettingsState] = useState<Settings>(() => ({
     ...defaultSettings,
     ...(JSON.parse(localStorage.getItem(storageKey) || "{}") as Settings),
   }));
+
+  // Fetch feeds and categories on mount
+  useEffect(() => {
+    const initializeData = async () => {
+      try {
+        const [feeds, categories] = await Promise.all([
+          fetchFeeds(),
+          fetchCategories(),
+        ]);
+
+        console.log("Fetched: ", feeds, categories);
+
+        setSettingsState((prev) => ({
+          ...prev,
+          feeds,
+          categories,
+        }));
+      } catch (error) {
+        console.error("Failed to initialize feeds and categories:", error);
+        // Continue without data if fetch fails
+      }
+    };
+
+    initializeData();
+  }, []);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -36,10 +63,13 @@ export function SettingsProvider({
 
   const value = {
     settings,
-    setSettings: (callback: (oldSettings: Settings) => Settings) => {
-      const newSettings = callback(settings);
-      localStorage.setItem(storageKey, JSON.stringify(newSettings));
-      setSettings(newSettings);
+    setSettings: (newSettings: Settings | ((prev: Settings) => Settings)) => {
+      const resolvedSettings =
+        typeof newSettings === "function"
+          ? (newSettings as (prev: Settings) => Settings)(settings)
+          : newSettings;
+      localStorage.setItem(storageKey, JSON.stringify(resolvedSettings));
+      setSettingsState(resolvedSettings);
     },
   };
 

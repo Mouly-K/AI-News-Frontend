@@ -1,4 +1,4 @@
-import type { Article } from "@/types/article-data";
+import type { Article } from "@/types/article";
 
 /**
  * Fetches parsed article from the backend
@@ -10,7 +10,7 @@ export async function fetchArticle(articleUrl: string) {
 
   const BASE_URL = import.meta.env.VITE_BACKEND_BASE_URL;
   const article = await fetch(
-    `${BASE_URL}article?url=${encodeURIComponent(articleUrl)}`,
+    `${BASE_URL}/article?url=${encodeURIComponent(articleUrl)}`,
     {
       mode: "cors",
       method: "GET",

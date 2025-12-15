@@ -1,16 +1,13 @@
 // Separate file for helpers, types, etc to trigger React Refresh properly
 
 import { createContext, useContext } from "react";
-import {
-  DEFAULT_FEEDS,
-  THEMES,
-  type SettingsProviderState,
-} from "@/types/settings";
+import { THEMES } from "@/types/settings";
+import type { SettingsProviderState } from "@/types/providers/settings";
 
 const initialState: SettingsProviderState = {
   settings: {
     theme: THEMES.SYSTEM,
-    feeds: DEFAULT_FEEDS,
+    feeds: [],
     categories: [],
   },
   setSettings: () => null,

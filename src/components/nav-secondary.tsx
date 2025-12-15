@@ -1,7 +1,5 @@
-"use client";
-
 import * as React from "react";
-import { NavLink } from "react-router";
+import { Settings as SettingsIcon } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -10,32 +8,28 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 
-import { ThemeSwitcher } from "./theme-switcher";
-import type { SidebarRoute } from "@/routes";
+import { useSettingsModal } from "@/providers/settings-modal";
 
 export function NavSecondary({
-  items,
   ...props
-}: {
-  items: SidebarRoute[];
-} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+}: React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const { setOpen } = useSettingsModal();
+
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
-          {items.map((item) => (
-            <NavLink key={item.name} to={item.path}>
-              {() => (
-                <SidebarMenuItem>
-                  <SidebarMenuButton tooltip={item.name}>
-                    {item.icon && <item.icon />}
-                    <span>{item.name}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )}
-            </NavLink>
-          ))}
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              tooltip="Change your preferences"
+              onClick={() => setOpen(true)}
+            >
+              <SettingsIcon />
+              <span>Settings</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <ThemeSwitcher />
           </SidebarMenuItem>

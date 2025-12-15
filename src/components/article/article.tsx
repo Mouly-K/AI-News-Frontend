@@ -10,21 +10,23 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { useArticle } from "@/hooks/use-article";
+import { useArticleModal } from "@/providers/article-modal";
 
-export default function Article({
-  url,
-  isOpen,
-  setIsOpen,
-}: {
-  url: string | null;
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
-  const { data, isLoading, isError } = useArticle(url || "");
+export default function Article() {
+  const { articleModal, setArticleModal } = useArticleModal();
+  const { data, isLoading, isError } = useArticle(
+    articleModal.articleUrl || "",
+  );
 
   return (
     data?.content && (
-      <Drawer open={isOpen} onOpenChange={setIsOpen} dismissible={true}>
+      <Drawer
+        open={articleModal.articleOpen}
+        onOpenChange={(isOpen) =>
+          setArticleModal({ ...articleModal, articleOpen: isOpen })
+        }
+        dismissible={true}
+      >
         <DrawerContent>
           <div className="mx-auto flex w-full max-w-2xl min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300 overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <DrawerHeader>
@@ -44,7 +46,9 @@ export default function Article({
                 <Button
                   className="max-w-fit"
                   variant="outline"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() =>
+                    setArticleModal({ ...articleModal, articleOpen: false })
+                  }
                 >
                   Close
                 </Button>
