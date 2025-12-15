@@ -1,0 +1,62 @@
+import { useState, useEffect, useRef } from "react";
+import { Search } from "lucide-react";
+
+type SearchInputProps = {
+  value: string;
+  onChange: React.Dispatch<React.SetStateAction<string>>;
+  debounce?: number;
+  className?: string;
+  inputClassName?: string;
+  placeholderKey?: string;
+  placeholder?: string;
+};
+
+function SearchInput({
+  value,
+  onChange,
+  debounce = 0,
+  className,
+  inputClassName,
+  placeholderKey,
+  placeholder,
+}: SearchInputProps) {
+  const [query, setQuery] = useState("");
+
+  const timeout = useRef<number>(undefined);
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    clearTimeout(timeout.current);
+    setQuery(e.target.value);
+    timeout.current = setTimeout(() => {
+      onChange(e.target.value);
+    }, debounce);
+  }
+
+  useEffect(() => {
+    setQuery(value); // To sync external value changes with internal query
+  }, [value]);
+
+  return (
+    <div
+      className={`flex items-center border border-input rounded-md px-3 w-37.5 lg:w-62.5 gap-2 ${
+        className && className
+      }`}
+    >
+      <Search className="size-4 opacity-50" />
+      <input
+        placeholder={
+          placeholderKey
+            ? `Search ${placeholderKey}...`
+            : placeholder || "Search ..."
+        }
+        type="search"
+        value={query}
+        onChange={handleChange}
+        className={`placeholder:text-muted-foreground flex w-full bg-transparent text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50 h-8 border-none rounded-none ${
+          inputClassName && inputClassName
+        }`}
+      />
+    </div>
+  );
+}
+
+export default SearchInput;

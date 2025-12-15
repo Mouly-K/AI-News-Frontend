@@ -1,0 +1,90 @@
+#readability-page {
+    & > div > div {
+        @apply w-full justify-center p-10 relative mt-4 mb-12 flex flex-col gap-2 rounded-lg border;
+    }
+
+    h1 {
+        @apply scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance;
+    }
+
+    h2 {
+        @apply mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0;
+    }
+
+    h3 {
+        @apply mt-8 scroll-m-20 text-2xl font-semibold tracking-tight;
+    }
+
+    h4 {
+        @apply mt-8 scroll-m-20 text-xl font-semibold tracking-tight;
+    }
+
+    h5 {
+        @apply mt-8 scroll-m-20 text-lg font-semibold tracking-tight;
+    }
+
+    p {
+        @apply leading-7 not-first:mt-6;
+
+        a {
+            @apply text-primary font-medium underline underline-offset-4 px-1;
+        }
+    }
+
+    blockquote {
+        @apply mt-6 border-l-2 pl-6 italic;
+    }
+
+    /* Parent container */
+    div:has(> table) {
+        @apply my-6 w-full overflow-y-auto;
+
+        /* Apply styles ONLY if table is an immediate child */
+        table {
+            @apply w-full border-collapse;
+        }
+
+        /* Table head row */
+        table thead tr {
+            @apply even:bg-muted m-0 border-t p-0;
+        }
+
+        /* Table body rows */
+        table tbody tr {
+            @apply even:bg-muted m-0 border-t p-0;
+        }
+
+        /* Header cells */
+        table th {
+            @apply border px-4 py-2 text-left font-bold;
+        }
+
+        /* Data cells */
+        table td {
+            @apply border px-4 py-2 text-left;
+        }
+
+        /* Alignment handling (matches [&[align=center]] etc.) */
+        table th[align="center"],
+        table td[align="center"] {
+            @apply text-center;
+        }
+
+        table th[align="right"],
+        table td[align="right"] {
+            @apply text-right;
+        }
+    }
+
+    ul {
+        @apply my-6 ml-6 list-disc [&>li]:mt-2;
+    }
+
+    code {
+        @apply bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+    }
+
+    small {
+        @apply text-sm leading-none font-medium;
+    }
+}
