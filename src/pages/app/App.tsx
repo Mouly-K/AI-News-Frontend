@@ -15,7 +15,7 @@ export default function App() {
       }
     >
       <AppSidebar variant="inset" />
-      <SidebarInset className="h-[98.3dvh] overflow-y-hidden">
+      <SidebarInset>
         <Outlet />
         <Toaster position="top-right" />
       </SidebarInset>

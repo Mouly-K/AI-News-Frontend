@@ -1,23 +1,17 @@
 // Separate file for helpers, types, etc to trigger React Refresh properly
 
 import { createContext, useContext } from "react";
-
-import { type Settings } from "@/types/settings";
-
-type SettingsProviderProps = {
-  children: React.ReactNode;
-  defaultSettings?: Settings;
-  storageKey?: string;
-};
-
-type SettingsProviderState = {
-  settings: Settings;
-  setSettings: (callback: (oldSettings: Settings) => Settings) => void;
-};
+import {
+  DEFAULT_FEEDS,
+  THEMES,
+  type SettingsProviderState,
+} from "@/types/settings";
 
 const initialState: SettingsProviderState = {
   settings: {
-    theme: "system",
+    theme: THEMES.SYSTEM,
+    feeds: DEFAULT_FEEDS,
+    categories: [],
   },
   setSettings: () => null,
 };
@@ -34,5 +28,4 @@ function useSettings() {
   return context;
 }
 
-export type { SettingsProviderProps, SettingsProviderState };
 export { SettingsProviderContext, useSettings, initialState };

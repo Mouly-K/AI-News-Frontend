@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import {
-  initialState,
-  SettingsProviderContext,
-  type SettingsProviderProps,
-} from "./helpers";
+import { initialState, SettingsProviderContext } from "./helpers";
+
+import type { SettingsProviderProps } from "@/types/settings";
 
 import { THEMES, type Settings } from "@/types/settings";
 

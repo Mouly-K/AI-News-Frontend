@@ -11,19 +11,15 @@ import { filterRssItems } from "@/lib/news";
 import type { Category } from "@/types/category";
 import categoriesData from "@/data/categories.json";
 import { CategoryFilter } from "@/components/category-filter";
+import { useSettings } from "@/providers/settings/helpers";
 
 export default function News() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
-
-  const feedUrls = [
-    "http://pcworld.com/index.rss",
-    "https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml?edition=int",
-    "https://feedx.net/rss/ap.xml",
-  ];
+  const { settings } = useSettings();
 
   // No manual memoization required with React compiler yay
-  const feedQueries = useRssFeeds(feedUrls);
+  const feedQueries = useRssFeeds(settings.feeds);
 
   return (
     <>
@@ -45,7 +41,7 @@ export default function News() {
           />
         </div>
       </SiteHeader>
-      <div className="@container/main m-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <div className="@container/main m-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5">
         {feedQueries.map(({ isLoading, isError, data }, idx) => {
           if (isLoading) return <NewsCardSkeleton key={`skeleton-${idx}`} />;
           if (isError || !data) return;

@@ -1,3 +1,11 @@
+import type { Category } from "./category";
+
+const DEFAULT_FEEDS = [
+  "http://pcworld.com/index.rss",
+  "https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml?edition=int",
+  "https://feedx.net/rss/ap.xml",
+];
+
 const THEMES = {
   DARK: "dark",
   LIGHT: "light",
@@ -6,9 +14,22 @@ const THEMES = {
 
 type Theme = (typeof THEMES)[keyof typeof THEMES];
 
-interface Settings {
+type Settings = {
   theme: Theme;
-}
+  feeds: string[];
+  categories: Category[];
+};
 
-export { THEMES };
-export type { Theme, Settings };
+type SettingsProviderProps = {
+  children: React.ReactNode;
+  defaultSettings?: Settings;
+  storageKey?: string;
+};
+
+type SettingsProviderState = {
+  settings: Settings;
+  setSettings: (callback: (oldSettings: Settings) => Settings) => void;
+};
+
+export { THEMES, DEFAULT_FEEDS };
+export type { Theme, Settings, SettingsProviderProps, SettingsProviderState };
