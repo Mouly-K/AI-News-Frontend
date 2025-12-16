@@ -1,3 +1,4 @@
+import type { UseQueryResult } from "@tanstack/react-query";
 import type { Category } from "@/types/category";
 import type { RssFeed, RssItem } from "@/types/rss-feed";
 
@@ -59,4 +60,74 @@ function filterRssItems(
   });
 }
 
-export { filterRssItems };
+interface InterleavedItem {
+  item: RssItem | null;
+  feedData: RssFeed | null;
+  feedIdx: number;
+  itemIdx: number;
+  isLoading: boolean;
+}
+
+// Interleave items from all feeds in round-robin fashion
+function interleaveItems(
+  feedQueries: UseQueryResult<RssFeed | null, Error>[],
+  searchQuery: string,
+  selectedCategories: Category[],
+): InterleavedItem[] {
+  // Create array of filtered items for each feed with metadata
+  const feedItems = feedQueries.map(({ isLoading, isError, data }, feedIdx) => {
+    if (isLoading || isError || !data) return [];
+    return filterRssItems(data, searchQuery, selectedCategories).map(
+      (item, itemIdx) => ({
+        item,
+        feedData: data,
+        feedIdx,
+        itemIdx,
+        isLoading: false,
+      }),
+    );
+  });
+
+  // Check if any feeds are loading
+  const isAnyLoading = feedQueries.some(({ isLoading }) => isLoading);
+
+  // If any feeds are loading, add skeleton loaders
+  if (isAnyLoading) {
+    const result = [];
+    const totalFeeds = feedQueries.length;
+    const totalSkeletons = totalFeeds * 4; // Show 4 skeleton rows per feed
+
+    for (let i = 0; i < totalSkeletons; i++) {
+      for (let j = 0; j < feedItems.length; j++) {
+        if (i < feedItems[j].length) {
+          result.push(feedItems[j][i]);
+        } else if (feedQueries[j].isLoading) {
+          result.push({
+            item: null,
+            feedData: null,
+            feedIdx: j,
+            itemIdx: i,
+            isLoading: true,
+          });
+        }
+      }
+    }
+    return result;
+  }
+
+  // Interleave items round-robin style
+  const result = [];
+  let maxLength = Math.max(...feedItems.map((items) => items.length), 0);
+
+  for (let i = 0; i < maxLength; i++) {
+    for (let j = 0; j < feedItems.length; j++) {
+      if (i < feedItems[j].length) {
+        result.push(feedItems[j][i]);
+      }
+    }
+  }
+
+  return result;
+}
+
+export { filterRssItems, interleaveItems };

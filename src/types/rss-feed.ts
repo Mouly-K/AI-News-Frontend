@@ -9,7 +9,7 @@ type RssItem = {
   categories: string[];
   link: string;
   pubDate: string;
-  readTime: string;
+  readTime?: string;
 };
 
 type RssFeed = {

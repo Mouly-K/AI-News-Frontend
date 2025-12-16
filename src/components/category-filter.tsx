@@ -104,7 +104,7 @@ export function CategoryFilter({
       <PopoverContent className="w-55 p-0" align="start">
         <Command>
           <CommandInput placeholder={`Search ${title.toLowerCase()}...`} />
-          <CommandList>
+          <CommandList className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <CommandEmpty>No categories found.</CommandEmpty>
 
             <CommandGroup>

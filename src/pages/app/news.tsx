@@ -1,13 +1,17 @@
+import Masonry from "react-masonry-css";
+
 import NewsCard from "@/components/news-card/news-card";
 import NewsCardSkeleton from "@/components/news-card/news-card-skeleton";
 
 import { useSearch } from "@/providers/search";
 import { useCategories } from "@/providers/categories";
 import { useSettings } from "@/providers/settings/helpers";
+import { useArticleModal } from "@/providers/article-modal";
 import { useRssFeeds } from "@/hooks/use-rssfeeds";
 
-import { filterRssItems } from "@/lib/news";
-import { useArticleModal } from "@/providers/article-modal";
+import { interleaveItems } from "@/lib/news";
+
+import "./app.css";
 
 export default function News() {
   const { searchQuery } = useSearch();
@@ -17,31 +21,50 @@ export default function News() {
   // No manual memoization required with React compiler yay
   const feedQueries = useRssFeeds(settings.feeds);
 
+  const interleavedItems = interleaveItems(
+    feedQueries,
+    searchQuery,
+    selectedCategories,
+  );
+
   return (
-    <div className="@container/main m-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5">
-      {feedQueries.map(({ isLoading, isError, data }, idx) => {
-        if (isLoading) return <NewsCardSkeleton key={`skeleton-${idx}`} />;
-        if (isError || !data) return;
-        return filterRssItems(data, searchQuery, selectedCategories).map(
-          (item, index) => (
+    <Masonry
+      breakpointCols={{
+        default: 5,
+        1900: 4,
+        1500: 3,
+        1150: 2,
+        900: 1,
+      }}
+      className="flex w-full pr-3"
+      columnClassName="pl-3 bg-clip-padding"
+    >
+      {interleavedItems.map(
+        ({ item, feedData, feedIdx, itemIdx, isLoading }) => {
+          if (isLoading) {
+            return (
+              <div key={`skeleton-${feedIdx}-${itemIdx}`} className="mt-3">
+                <NewsCardSkeleton />
+              </div>
+            );
+          }
+
+          return (
             <NewsCard
-              key={`${data.title}:${index}:${item.title!}`}
-              {...item}
-              source={{
-                title: data.title,
-                url: data.link,
-                image: data.image,
-              }}
+              className="mt-3"
+              key={`${feedData!.title}:${itemIdx}:${item!.title!}`}
+              {...item!}
+              source={feedData}
               onClick={() =>
                 setArticleModal({
                   articleOpen: true,
-                  articleUrl: item.link,
+                  articleUrl: item!.link,
                 })
               }
             />
-          ),
-        );
-      })}
-    </div>
+          );
+        },
+      )}
+    </Masonry>
   );
 }
