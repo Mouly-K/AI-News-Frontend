@@ -15,7 +15,7 @@ export default function News() {
   const { setArticleModal } = useArticleModal();
   const { settings } = useSettings();
   // No manual memoization required with React compiler yay
-  const feedQueries = useRssFeeds(settings.feeds.map((feed) => feed.url));
+  const feedQueries = useRssFeeds(settings.feeds);
 
   return (
     <div className="@container/main m-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5">

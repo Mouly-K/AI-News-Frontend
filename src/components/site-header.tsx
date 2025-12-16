@@ -4,13 +4,11 @@ import SearchInput from "@/components/ui/search-input";
 import { CategoryFilter } from "@/components/category-filter";
 
 import { useSearch } from "@/providers/search";
-import { useCategories } from "@/providers/categories";
-
-import categoriesData from "@/data/categories.json";
+import { useCategories as useSelectedCategories } from "@/providers/categories";
 
 export function SiteHeader() {
   const { searchQuery, setSearchQuery } = useSearch();
-  const { selectedCategories, setSelectedCategories } = useCategories();
+  const { selectedCategories, setSelectedCategories } = useSelectedCategories();
 
   return (
     <header className="flex h-(--header-height) rounded-t-xl bg-background sticky top-0 z-50 w-full shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
@@ -31,10 +29,6 @@ export function SiteHeader() {
           />
           <CategoryFilter
             title="Category"
-            categories={categoriesData.map((c) => ({
-              id: BigInt(c.id),
-              name: c.name,
-            }))}
             selected={selectedCategories}
             onChange={setSelectedCategories}
           />

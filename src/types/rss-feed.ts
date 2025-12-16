@@ -1,7 +1,11 @@
+import type { Category } from "./category";
+
 type RssItem = {
   title: string;
   description: string;
   images: string[];
+  // Categories that are coming from the RSS feed itself
+  // Not stored in db, no need for ID
   categories: string[];
   link: string;
   pubDate: string;
@@ -15,7 +19,7 @@ type RssFeed = {
   description: string;
   copyright: string;
   image: string;
-  categories: string[];
+  categories: Category[];
   items: RssItem[];
 };
 

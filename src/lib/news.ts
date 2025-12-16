@@ -23,7 +23,7 @@ function filterRssItems(
       _cnt(data.title, query) ||
       _cnt(data.description, query) ||
       _cnt(data.link, query) ||
-      data.categories?.some((category) => _cnt(category, query));
+      data.categories?.some((category) => _cnt(category.name, query));
 
     // Apply category filter
     if (!hasSelectedCategories) {
@@ -51,7 +51,7 @@ function filterRssItems(
       (dataHasCategories &&
         data.categories!.some((category) =>
           selectedCategories.some((selectedCategory) =>
-            _cnt(category, selectedCategory.name),
+            _cnt(category.name, selectedCategory.name),
           ),
         ));
 

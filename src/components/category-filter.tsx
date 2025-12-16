@@ -17,28 +17,31 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
+import { Spinner } from "@/components/ui/spinner";
+
+import { useCategories } from "@/hooks/use-categories";
 
 import type { Category } from "@/types/category";
+import { cn } from "@/lib/utils";
 
 interface CategoryFilterProps {
   title?: string;
-  categories: Category[];
   selected: Category[];
   onChange: (categories: Category[]) => void;
 }
 
+const isSelected = (selected: Category[], category: Category) =>
+  selected.some((c) => c.id === category.id);
+
 export function CategoryFilter({
   title = "Categories",
-  categories,
   selected,
   onChange,
 }: CategoryFilterProps) {
-  const isSelected = (category: Category) =>
-    selected.some((c) => c.id === category.id);
+  const { data: categories, isLoading, isError } = useCategories();
 
   const toggleCategory = (category: Category) => {
-    if (isSelected(category)) {
+    if (isSelected(selected, category)) {
       onChange(selected.filter((c) => c.id !== category.id));
     } else {
       onChange([...selected, category]);
@@ -46,6 +49,15 @@ export function CategoryFilter({
   };
 
   const clearAll = () => onChange([]);
+
+  if (isLoading)
+    return (
+      <Button variant="outline" disabled size="sm">
+        <Spinner />
+        Please wait
+      </Button>
+    );
+  else if (!categories || isError) return;
 
   return (
     <Popover>
@@ -97,9 +109,6 @@ export function CategoryFilter({
 
             <CommandGroup>
               {categories.map((category) => {
-                const selected = isSelected(category);
-                const Icon = category.icon;
-
                 return (
                   <CommandItem
                     key={category.id}
@@ -108,18 +117,13 @@ export function CategoryFilter({
                     <div
                       className={cn(
                         "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                        selected
+                        isSelected(selected, category)
                           ? "bg-primary text-primary-foreground"
                           : "opacity-50 [&_svg]:invisible",
                       )}
                     >
                       <Check className="h-4 w-4" />
                     </div>
-
-                    {Icon && (
-                      <Icon className="mr-2 h-4 w-4 text-muted-foreground" />
-                    )}
-
                     <span className="text-sm">{category.name}</span>
                   </CommandItem>
                 );
