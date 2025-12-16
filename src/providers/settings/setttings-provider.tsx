@@ -27,8 +27,6 @@ export function SettingsProvider({
           fetchCategories(),
         ]);
 
-        console.log("Fetched: ", feeds, categories);
-
         setSettingsState((prev) => ({
           ...prev,
           feeds,
