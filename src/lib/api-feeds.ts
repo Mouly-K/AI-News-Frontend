@@ -17,10 +17,6 @@ const SUCCESS = {
   DELETE: "Feed deleted successfully",
 } as const;
 
-const defaultHeaders = {
-  "Access-Control-Allow-Origin": BASE_URL,
-};
-
 export interface Feed {
   id: bigint;
   name: string;
@@ -34,9 +30,7 @@ export interface Feed {
  * Fetch all feeds
  */
 export async function fetchFeeds(): Promise<Feed[]> {
-  const res = await fetch(`${BASE_URL}/feeds`, {
-    headers: defaultHeaders,
-  });
+  const res = await fetch(`${BASE_URL}/feeds`);
 
   if (!res.ok) {
     toast.error(ERRORS.FETCH_FAIL, {
@@ -52,9 +46,7 @@ export async function fetchFeeds(): Promise<Feed[]> {
  * Fetch a single feed by ID
  */
 export async function fetchFeedById(id: bigint): Promise<Feed> {
-  const res = await fetch(`${BASE_URL}/feeds/${id}`, {
-    headers: defaultHeaders,
-  });
+  const res = await fetch(`${BASE_URL}/feeds/${id}`);
 
   if (!res.ok) {
     toast.error(ERRORS.FETCH_ONE_FAIL, {
@@ -78,7 +70,6 @@ export async function createFeed(data: {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...defaultHeaders,
     },
     body: JSON.stringify(data),
   });
@@ -108,7 +99,6 @@ export async function updateFeedCategories(
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      ...defaultHeaders,
     },
     body: JSON.stringify({
       categoryIds,
@@ -129,7 +119,6 @@ export async function updateFeedCategories(
 export async function deleteFeed(id: bigint): Promise<void> {
   const res = await fetch(`${BASE_URL}/feeds/${id}`, {
     method: "DELETE",
-    headers: defaultHeaders,
   });
 
   if (!res.ok) {

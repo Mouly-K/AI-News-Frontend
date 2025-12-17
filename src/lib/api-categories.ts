@@ -15,17 +15,11 @@ const SUCCESS = {
   DELETE: "Category deleted successfully",
 } as const;
 
-const defaultHeaders = {
-  "Access-Control-Allow-Origin": BASE_URL,
-};
-
 /**
  * Fetch all categories
  */
 export async function fetchCategories(): Promise<Category[]> {
-  const res = await fetch(`${BASE_URL}/categories`, {
-    headers: defaultHeaders,
-  });
+  const res = await fetch(`${BASE_URL}/categories`);
 
   if (!res.ok) {
     toast.error(ERRORS.FETCH_FAIL, {
@@ -45,7 +39,6 @@ export async function createCategory(name: string): Promise<Category> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      ...defaultHeaders,
     },
     body: JSON.stringify({ name }),
   });
@@ -70,7 +63,6 @@ export async function createCategory(name: string): Promise<Category> {
 export async function deleteCategory(categoryId: bigint): Promise<void> {
   const res = await fetch(`${BASE_URL}/categories/${categoryId}`, {
     method: "DELETE",
-    headers: defaultHeaders,
   });
 
   if (!res.ok) {

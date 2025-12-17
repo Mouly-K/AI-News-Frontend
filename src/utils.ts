@@ -1,5 +1,3 @@
-import type { SidebarRoute } from "./routes";
-
 const DEFAULT_MAX_AGE = 300;
 
 // General helpers
@@ -28,22 +26,6 @@ function filterObject<T extends Record<K, T[K]>, K extends keyof T>(
   return Object.fromEntries(filteredEntries) as Partial<T>;
 }
 
-function findSidebarRouteNameByPath(
-  routes: SidebarRoute[],
-  path: string,
-): string | undefined {
-  for (const route of routes) {
-    if (route.path === path) {
-      return route.name;
-    }
-    if (route.children) {
-      const found = findSidebarRouteNameByPath(route.children, path);
-      if (found) return found;
-    }
-  }
-  return undefined;
-}
-
 /**
  * Extract max-age from Cache-Control header (in seconds)
  * Returns default of 5 minutes (300 seconds) if no max-age is found
@@ -62,4 +44,9 @@ function extractMaxAge(cacheControlHeader: string | null): number {
   return DEFAULT_MAX_AGE; // Default 5 minutes
 }
 
-export { indexBy, filterObject, findSidebarRouteNameByPath, extractMaxAge };
+// Function to check if element is near bottom
+function isNearBottom(el: HTMLElement, threshold = 80) {
+  return el.scrollHeight - el.scrollTop - el.clientHeight < threshold;
+}
+
+export { indexBy, filterObject, extractMaxAge, isNearBottom };

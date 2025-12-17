@@ -17,7 +17,6 @@ export async function fetchArticle(articleUrl: string) {
       headers: {
         "Content-Type": "application/json",
         "Application-Type": "application/json",
-        "Access-Control-Allow-Origin": BASE_URL,
       },
     },
   );

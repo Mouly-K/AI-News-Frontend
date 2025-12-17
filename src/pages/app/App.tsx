@@ -7,6 +7,7 @@ import Article from "@/components/article/article";
 import News from "@/pages/app/news";
 
 import { Settings } from "@/components/settings/settings";
+import Chat from "@/components/chat/chat";
 
 export default function App() {
   return (
@@ -21,11 +22,12 @@ export default function App() {
       <AppSidebar variant="inset" />
       <SidebarInset>
         <SiteHeader />
-        <News />
-        <Toaster position="top-right" />
+        {/*<News />*/}
+        <Chat />
       </SidebarInset>
       <Article />
       <Settings />
+      <Toaster position="top-right" />
     </SidebarProvider>
   );
 }

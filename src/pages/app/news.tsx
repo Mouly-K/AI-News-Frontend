@@ -11,8 +11,6 @@ import { useRssFeeds } from "@/hooks/use-rssfeeds";
 
 import { interleaveItems } from "@/lib/news";
 
-import "./app.css";
-
 export default function News() {
   const { searchQuery } = useSearch();
   const { selectedCategories } = useCategories();

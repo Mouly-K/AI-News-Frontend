@@ -1,8 +1,9 @@
-import { ArticleModalProvider } from "./article-modal";
-import { CategoriesProvider } from "./categories";
-import { SearchProvider } from "./search";
 import { SettingsProvider } from "./settings";
 import { SettingsModalProvider } from "./settings-modal";
+import { SearchProvider } from "./search";
+import { CategoriesProvider } from "./categories";
+import { ArticleModalProvider } from "./article-modal";
+import { ChatProvider } from "./chat";
 
 export default function ContextProvider({
   children,
@@ -14,7 +15,9 @@ export default function ContextProvider({
       <SettingsModalProvider>
         <SearchProvider>
           <CategoriesProvider>
-            <ArticleModalProvider>{children}</ArticleModalProvider>
+            <ArticleModalProvider>
+              <ChatProvider>{children}</ChatProvider>
+            </ArticleModalProvider>
           </CategoriesProvider>
         </SearchProvider>
       </SettingsModalProvider>
