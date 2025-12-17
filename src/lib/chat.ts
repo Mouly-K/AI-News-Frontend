@@ -6,6 +6,7 @@ const BASE_URL =
 
 const ERRORS = {
   POST_FAIL: "Failed to post message",
+  DELETE_FAIL: "Failed to delete chat",
 } as const;
 
 /**
@@ -37,4 +38,20 @@ export async function sendChatMessage(
   }
 
   return res.json();
+}
+
+export async function deleteChat(id: string) {
+  const res = await fetch(`${BASE_URL}/chat/delete/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    toast.error(ERRORS.DELETE_FAIL, {
+      description:
+        error.error ||
+        `${ERRORS.DELETE_FAIL}. Are you connected to the internet?`,
+    });
+    throw new Error(error.error || ERRORS.DELETE_FAIL);
+  }
 }

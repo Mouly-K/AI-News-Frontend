@@ -24,6 +24,8 @@ import { sendChatMessage } from "@/lib/chat";
 import { STREAM_STATUS, type StreamStatus } from "@/types/chat/stream-status";
 
 import { isNearBottom } from "@/utils";
+import Chatheader from "./chat-header";
+import { ChatEmpty } from "./chat-empty";
 
 export default function Chat() {
   const [query, setQuery] = useState("");
@@ -72,7 +74,6 @@ export default function Chat() {
     eventSource.addEventListener("done", (e) => {
       const fullMessage = streamTextRef.current;
       setChat((chat) => {
-        console.log("Updating chat with full message: ", fullMessage);
         return updateChatWithNewMessage(chat, {
           role: "assistant",
           content: fullMessage,
@@ -100,8 +101,6 @@ export default function Chat() {
       content: query,
     };
 
-    console.log("Sending message: ", message);
-
     setChat((chat) => updateChatWithNewMessage(chat, message));
     await sendChatMessage(chat.currentConversationId, {
       model:
@@ -118,17 +117,9 @@ export default function Chat() {
       direction="right"
     >
       <DrawerContent className="lg:w-xl! lg:max-w-xl! h-full rounded-2xl">
-        <DrawerHeader>
-          <DrawerTitle
-            className="scroll-m-20 text-4xl font-extrabold tracking-tight text-balance"
-            onClick={() => console.log(chat)}
-          >
-            Chat
-          </DrawerTitle>
-          <DrawerDescription className="text-muted-foreground text-xl leading-7">
-            Chat with AI Assistant to consume news smarter
-          </DrawerDescription>
-        </DrawerHeader>
+        <Chatheader />
+        {chat.conversations[chat.currentConversationId].messages.length ===
+          0 && <ChatEmpty />}
         <ScrollArea className="flex flex-1 overflow-y-scroll p-4">
           <div ref={chatContainerRef} className="flex flex-col gap-4 w-full">
             {chat.conversations[chat.currentConversationId].messages.map(
@@ -144,7 +135,12 @@ export default function Chat() {
         </ScrollArea>
         <DrawerFooter>
           {/*<DrawerClose></DrawerClose>*/}
-          <ChatBox query={query} setQuery={setQuery} onSubmit={handleSubmit} />
+          <ChatBox
+            query={query}
+            setQuery={setQuery}
+            onSubmit={handleSubmit}
+            disabled={streamStatus === STREAM_STATUS.OPEN}
+          />
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

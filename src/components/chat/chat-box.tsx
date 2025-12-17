@@ -1,5 +1,5 @@
-import { IconPlus } from "@tabler/icons-react";
-import { ArrowUpIcon } from "lucide-react";
+import { IconAt } from "@tabler/icons-react";
+import { ArrowUpIcon, BrainCircuit } from "lucide-react";
 import {
   InputGroup,
   InputGroupAddon,
@@ -14,42 +14,98 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import { useModels } from "@/hooks/use-models";
+import { useChat } from "@/providers/chat";
 
 interface ChatBoxProps {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   onSubmit: () => void;
+  disabled: boolean;
 }
 
-export default function ChatBox({ query, setQuery, onSubmit }: ChatBoxProps) {
+export default function ChatBox({
+  query,
+  setQuery,
+  onSubmit,
+  disabled = false,
+}: ChatBoxProps) {
+  const { chat, setChat } = useChat();
+  const { data: models, isLoading, isError } = useModels();
+
   return (
     <>
       <InputGroup className="rounded-2xl">
+        <InputGroupAddon align="block-start">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <InputGroupButton
+                variant="outline"
+                className="rounded-full font-medium"
+                size="sm"
+                disabled={disabled}
+              >
+                <IconAt />
+                Add context
+              </InputGroupButton>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>
+                Add context. You can add a category, particular source or a
+                specific article
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </InputGroupAddon>
         <InputGroupTextarea
-          placeholder="Ask, Search or Chat..."
+          placeholder="Give me a brief summary about today's news..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          disabled={disabled}
         />
         <InputGroupAddon align="block-end">
-          <InputGroupButton
-            variant="outline"
-            className="rounded-full"
-            size="icon-xs"
-          >
-            <IconPlus />
-          </InputGroupButton>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <InputGroupButton variant="ghost">Auto</InputGroupButton>
+              <InputGroupButton
+                variant="ghost"
+                className="rounded-full"
+                size="sm"
+                disabled={disabled || isLoading}
+              >
+                <BrainCircuit />
+                {chat.conversations[chat.currentConversationId].model}
+              </InputGroupButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               side="top"
               align="start"
               className="[--radius:0.95rem]"
             >
-              <DropdownMenuItem>Auto</DropdownMenuItem>
-              <DropdownMenuItem>Agent</DropdownMenuItem>
-              <DropdownMenuItem>Manual</DropdownMenuItem>
+              {models?.map((model) => (
+                <DropdownMenuItem
+                  key={model.model}
+                  onClick={() =>
+                    setChat((chat) => ({
+                      ...chat,
+                      conversations: {
+                        ...chat.conversations,
+                        [chat.currentConversationId]: {
+                          ...chat.conversations[chat.currentConversationId],
+                          model: model.model,
+                        },
+                      },
+                    }))
+                  }
+                >
+                  {model.name}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuContent>
           </DropdownMenu>
           <InputGroupText className="ml-auto">52% used</InputGroupText>
@@ -59,6 +115,7 @@ export default function ChatBox({ query, setQuery, onSubmit }: ChatBoxProps) {
             className="rounded-full"
             size="icon-xs"
             onClick={onSubmit}
+            disabled={disabled}
           >
             <ArrowUpIcon />
             <span className="sr-only">Send</span>

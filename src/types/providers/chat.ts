@@ -1,8 +1,7 @@
 import type { Message } from "ollama/src/interfaces.js";
 
 export type Conversation = {
-  title: string;
-  model: string;
+  model?: string;
   messages: Message[];
 };
 

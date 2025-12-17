@@ -16,7 +16,7 @@
     }
 
     h3 {
-        @apply mt-8 scroll-m-20 text-2xl font-semibold tracking-tight;
+        @apply my-8 scroll-m-20 text-2xl font-semibold tracking-tight;
     }
 
     h4 {
@@ -41,43 +41,42 @@
 
     /* Parent container */
     div:has(> table) {
-        @apply my-6 w-full overflow-y-auto;
+        @apply my-6 w-full overflow-y-auto rounded-2xl;
+    }
 
-        /* Apply styles ONLY if table is an immediate child */
-        table {
-            @apply w-full border-collapse;
-        }
+    table {
+        @apply w-full border-collapse rounded-2xl;
+    }
 
-        /* Table head row */
-        table thead tr {
-            @apply even:bg-muted m-0 border-t p-0;
-        }
+    /* Table head row */
+    table thead tr {
+        @apply even:bg-muted m-0 border-t p-0;
+    }
 
-        /* Table body rows */
-        table tbody tr {
-            @apply even:bg-muted m-0 border-t p-0;
-        }
+    /* Table body rows */
+    table tbody tr {
+        @apply even:bg-muted m-0 border-t p-0;
+    }
 
-        /* Header cells */
-        table th {
-            @apply border px-4 py-2 text-left font-bold;
-        }
+    /* Header cells */
+    table th {
+        @apply border px-4 py-2 text-left font-bold;
+    }
 
-        /* Data cells */
-        table td {
-            @apply border px-4 py-2 text-left;
-        }
+    /* Data cells */
+    table td {
+        @apply border px-4 py-2 text-left;
+    }
 
-        /* Alignment handling (matches [&[align=center]] etc.) */
-        table th[align="center"],
-        table td[align="center"] {
-            @apply text-center;
-        }
+    /* Alignment handling (matches [&[align=center]] etc.) */
+    table th[align="center"],
+    table td[align="center"] {
+        @apply text-center;
+    }
 
-        table th[align="right"],
-        table td[align="right"] {
-            @apply text-right;
-        }
+    table th[align="right"],
+    table td[align="right"] {
+        @apply text-right;
     }
 
     ul {
@@ -88,7 +87,19 @@
         @apply bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
     }
 
+    pre {
+        @apply p-4 rounded-lg overflow-x-auto bg-muted mb-6;
+
+        code {
+            @apply bg-transparent p-0;
+        }
+    }
+
     small {
         @apply text-sm leading-none font-medium;
+    }
+
+    strong {
+        @apply font-semibold;
     }
 }
