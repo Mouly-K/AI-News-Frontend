@@ -1,9 +1,10 @@
-import { SettingsProvider } from "./settings";
-import { SettingsModalProvider } from "./settings-modal";
-import { SearchProvider } from "./search";
-import { CategoriesProvider } from "./categories";
-import { ArticleModalProvider } from "./article-modal";
-import { ChatProvider } from "./chat";
+import { SettingsProvider } from "@/providers/settings";
+import { SettingsModalProvider } from "@/providers/settings-modal";
+import { SearchProvider } from "@/providers/search";
+import { SelectedCategoriesProvider } from "@/providers/selected-categories";
+import { SelectedFeedsProvider } from "@/providers/selected-feeds";
+import { ArticleModalProvider } from "@/providers/article-modal";
+import { ChatProvider } from "@/providers/chat";
 
 export default function ContextProvider({
   children,
@@ -14,11 +15,13 @@ export default function ContextProvider({
     <SettingsProvider>
       <SettingsModalProvider>
         <SearchProvider>
-          <CategoriesProvider>
-            <ArticleModalProvider>
-              <ChatProvider>{children}</ChatProvider>
-            </ArticleModalProvider>
-          </CategoriesProvider>
+          <SelectedCategoriesProvider>
+            <SelectedFeedsProvider>
+              <ArticleModalProvider>
+                <ChatProvider>{children}</ChatProvider>
+              </ArticleModalProvider>
+            </SelectedFeedsProvider>
+          </SelectedCategoriesProvider>
         </SearchProvider>
       </SettingsModalProvider>
     </SettingsProvider>

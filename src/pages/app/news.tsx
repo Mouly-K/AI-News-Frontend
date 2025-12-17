@@ -4,16 +4,18 @@ import NewsCard from "@/components/news-card/news-card";
 import NewsCardSkeleton from "@/components/news-card/news-card-skeleton";
 
 import { useSearch } from "@/providers/search";
-import { useCategories } from "@/providers/categories";
+import { useSelectedCategories } from "@/providers/selected-categories";
 import { useSettings } from "@/providers/settings/helpers";
 import { useArticleModal } from "@/providers/article-modal";
 import { useRssFeeds } from "@/hooks/use-rssfeeds";
 
 import { interleaveItems } from "@/lib/news";
+import { useSelectedFeeds } from "@/providers/selected-feeds";
 
 export default function News() {
   const { searchQuery } = useSearch();
-  const { selectedCategories } = useCategories();
+  const { selectedCategories } = useSelectedCategories();
+  const { selectedFeeds } = useSelectedFeeds();
   const { setArticleModal } = useArticleModal();
   const { settings } = useSettings();
   // No manual memoization required with React compiler yay
@@ -23,6 +25,7 @@ export default function News() {
     feedQueries,
     searchQuery,
     selectedCategories,
+    selectedFeeds,
   );
 
   return (

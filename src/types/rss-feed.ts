@@ -15,6 +15,7 @@ type RssItem = {
 type RssFeed = {
   title: string;
   link: string;
+  feedUrl: string;
   lastBuildDate: string;
   description: string;
   copyright: string;

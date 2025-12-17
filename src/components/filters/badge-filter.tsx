@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react";
 import { Check, Settings2 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -19,36 +20,27 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
 
-import { useCategories } from "@/hooks/use-categories";
-
-import type { Category } from "@/types/category";
 import { cn } from "@/lib/utils";
+import { isSelected, toggleItemSelection, type GT } from "./utils";
 
-interface CategoryFilterProps {
-  title?: string;
-  selected: Category[];
-  onChange: (categories: Category[]) => void;
-}
-
-const isSelected = (selected: Category[], category: Category) =>
-  selected.some((c) => c.id === category.id);
-
-export function CategoryFilter({
-  title = "Categories",
-  selected,
-  onChange,
-}: CategoryFilterProps) {
-  const { data: categories, isLoading, isError } = useCategories();
-
-  const toggleCategory = (category: Category) => {
-    if (isSelected(selected, category)) {
-      onChange(selected.filter((c) => c.id !== category.id));
-    } else {
-      onChange([...selected, category]);
-    }
-  };
-
-  const clearAll = () => onChange([]);
+export function BadgeFilter<T extends GT>({
+  title,
+  emptyMessage,
+  items,
+  isLoading,
+  isError,
+  selectedItems,
+  setSelectedItems,
+}: {
+  title: string;
+  emptyMessage: string;
+  items: T[];
+  isLoading: boolean;
+  isError: boolean;
+  selectedItems: T[];
+  setSelectedItems: Dispatch<SetStateAction<T[]>>;
+}) {
+  const clearAll = () => setSelectedItems([]);
 
   if (isLoading)
     return (
@@ -57,41 +49,41 @@ export function CategoryFilter({
         Please wait
       </Button>
     );
-  else if (!categories || isError) return;
+  else if (!items || isError) return;
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild className="hidden lg:flex">
         <Button variant="outline" size="sm" className="h-8 border-dashed">
           <Settings2 className="mr-2 h-4 w-4" />
           {title}
 
-          {selected.length > 0 && (
+          {selectedItems.length > 0 && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
               <Badge
                 variant="secondary"
                 className="rounded-sm px-1 font-normal lg:hidden"
               >
-                {selected.length}
+                {selectedItems.length}
               </Badge>
 
               <div className="hidden space-x-1 lg:flex">
-                {selected.length > 2 ? (
+                {selectedItems.length > 2 ? (
                   <Badge
                     variant="secondary"
                     className="rounded-sm px-1 font-normal"
                   >
-                    {selected.length} selected
+                    {selectedItems.length} selectedItems
                   </Badge>
                 ) : (
-                  selected.map((category) => (
+                  selectedItems.map((item) => (
                     <Badge
-                      key={category.id}
+                      key={item.id}
                       variant="secondary"
                       className="rounded-sm px-1 font-normal"
                     >
-                      {category.name}
+                      {item.name}
                     </Badge>
                   ))
                 )}
@@ -105,32 +97,36 @@ export function CategoryFilter({
         <Command>
           <CommandInput placeholder={`Search ${title.toLowerCase()}...`} />
           <CommandList className="[&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <CommandEmpty>No categories found.</CommandEmpty>
+            <CommandEmpty>{emptyMessage}</CommandEmpty>
 
             <CommandGroup>
-              {categories.map((category) => {
+              {items.map((item) => {
                 return (
                   <CommandItem
-                    key={category.id}
-                    onSelect={() => toggleCategory(category)}
+                    key={item.id}
+                    onSelect={() =>
+                      setSelectedItems((items: T[]) =>
+                        toggleItemSelection(items, item),
+                      )
+                    }
                   >
                     <div
                       className={cn(
                         "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
-                        isSelected(selected, category)
+                        isSelected(selectedItems, item)
                           ? "bg-primary text-primary-foreground"
                           : "opacity-50 [&_svg]:invisible",
                       )}
                     >
-                      <Check className="h-4 w-4" />
+                      <Check className="h-4 w-4 text-secondary" />
                     </div>
-                    <span className="text-sm">{category.name}</span>
+                    <span className="text-sm">{item.name}</span>
                   </CommandItem>
                 );
               })}
             </CommandGroup>
 
-            {selected.length > 0 && (
+            {selectedItems.length > 0 && (
               <>
                 <CommandSeparator />
                 <CommandGroup>

@@ -1,12 +1,6 @@
 import type { Category } from "./category";
 import type { Feed } from "./feed";
 
-// const DEFAULT_FEEDS = [
-//   "http://pcworld.com/index.rss",
-//   "https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml?edition=int",
-//   "https://feedx.net/rss/ap.xml",
-// ];
-
 const THEMES = {
   DARK: "dark",
   LIGHT: "light",

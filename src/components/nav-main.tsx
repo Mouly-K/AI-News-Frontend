@@ -1,32 +1,41 @@
-import { MessageCircle } from "lucide-react";
-import {
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from "@/components/ui/sidebar";
+import { SidebarFilter } from "@/components/filters/sidebar-filter";
 
-import { useChat } from "@/providers/chat";
+import { useSelectedFeeds } from "@/providers/selected-feeds";
+import { useSelectedCategories } from "@/providers/selected-categories";
+import { useFeeds } from "@/hooks/use-feeds";
+import { useCategories } from "@/hooks/use-categories";
 
 export function NavMain() {
-  const { chat, setChat } = useChat();
+  const { selectedFeeds, setSelectedFeeds } = useSelectedFeeds();
+  const { selectedCategories, setSelectedCategories } = useSelectedCategories();
+
+  const {
+    data: feeds = [],
+    isLoading: feedsLoading,
+    isError: feedsError,
+  } = useFeeds();
+
+  const {
+    data: categories = [],
+    isLoading: categoriesLoading,
+    isError: categoriesError,
+  } = useCategories();
 
   return (
-    <SidebarGroup>
-      <SidebarGroupContent className="flex flex-col gap-2">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              tooltip="Open Chat"
-              onClick={() => setChat((chat) => ({ ...chat, open: !chat.open }))}
-            >
-              <MessageCircle />
-              <span>Toggle Chat</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarGroupContent>
-    </SidebarGroup>
+    <>
+      <SidebarFilter
+        defaultOpen
+        title="Sources"
+        items={feeds}
+        selectedItems={selectedFeeds}
+        setSelectedItems={setSelectedFeeds}
+      />
+      <SidebarFilter
+        title="Categories"
+        items={categories}
+        selectedItems={selectedCategories}
+        setSelectedItems={setSelectedCategories}
+      />
+    </>
   );
 }

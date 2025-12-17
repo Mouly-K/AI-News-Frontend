@@ -28,22 +28,25 @@ export default function Chatheader() {
   return (
     <DrawerHeader>
       <DrawerTitle className="flex justify-end capitalize gap-2">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              variant="outline"
-              className="rounded-full capitalize border-dashed"
-              size="icon-sm"
-              onClick={async () => {
-                await deleteChat(chat.currentConversationId);
-                setChat((chat) => clearChat(chat));
-              }}
-            >
-              <X />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Clear Chat</TooltipContent>
-        </Tooltip>
+        {chat.conversations[chat.currentConversationId].messages.length !==
+          0 && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                className="rounded-full capitalize border-dashed"
+                size="icon-sm"
+                onClick={async () => {
+                  await deleteChat(chat.currentConversationId);
+                  setChat((chat) => clearChat(chat));
+                }}
+              >
+                <X />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Clear Chat</TooltipContent>
+          </Tooltip>
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button

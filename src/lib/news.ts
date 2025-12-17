@@ -1,6 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { Category } from "@/types/category";
 import type { RssFeed, RssItem } from "@/types/rss-feed";
+import type { Feed } from "@/types/feed";
 
 const _cnt = (a: string, b: string) =>
   a.toLowerCase().includes(b.toLowerCase());
@@ -9,9 +10,11 @@ function filterRssItems(
   data: RssFeed,
   searchQuery: string,
   selectedCategories: Category[] = [],
+  selectedFeeds: Feed[] = [],
 ): RssItem[] {
   const query = searchQuery.trim().toLowerCase();
   const hasSelectedCategories = selectedCategories.length > 0;
+  const hasSelectedFeeds = selectedFeeds.length > 0;
 
   return data?.items?.filter((item) => {
     // Apply search query filter
@@ -26,19 +29,25 @@ function filterRssItems(
       _cnt(data.link, query) ||
       data.categories?.some((category) => _cnt(category.name, query));
 
+    // Apply feed filter
+    const matchesFeed =
+      !hasSelectedFeeds ||
+      selectedFeeds.some((feed) => feed.url === data.feedUrl);
+
     // Apply category filter
     if (!hasSelectedCategories) {
-      // If no categories selected, include all items
-      return matchesQuery;
+      // If no categories selected, include all items that match query and feed
+      return matchesQuery && matchesFeed;
     }
 
     // Check if both item and data categories are empty (general items)
     const itemHasCategories = item.categories && item.categories.length > 0;
     const dataHasCategories = data.categories && data.categories.length > 0;
 
+    // This should no longer happen since every feed added has categories
     if (!itemHasCategories && !dataHasCategories) {
       // General items are included regardless of category filter
-      return matchesQuery;
+      return matchesQuery && matchesFeed;
     }
 
     // Check if item or data categories match selected categories
@@ -56,7 +65,7 @@ function filterRssItems(
           ),
         ));
 
-    return matchesQuery && matchesCategory;
+    return matchesQuery && matchesCategory && matchesFeed;
   });
 }
 
@@ -73,19 +82,23 @@ function interleaveItems(
   feedQueries: UseQueryResult<RssFeed | null, Error>[],
   searchQuery: string,
   selectedCategories: Category[],
+  selectedFeeds: Feed[],
 ): InterleavedItem[] {
   // Create array of filtered items for each feed with metadata
   const feedItems = feedQueries.map(({ isLoading, isError, data }, feedIdx) => {
     if (isLoading || isError || !data) return [];
-    return filterRssItems(data, searchQuery, selectedCategories).map(
-      (item, itemIdx) => ({
-        item,
-        feedData: data,
-        feedIdx,
-        itemIdx,
-        isLoading: false,
-      }),
-    );
+    return filterRssItems(
+      data,
+      searchQuery,
+      selectedCategories,
+      selectedFeeds,
+    ).map((item, itemIdx) => ({
+      item,
+      feedData: data,
+      feedIdx,
+      itemIdx,
+      isLoading: false,
+    }));
   });
 
   // Check if any feeds are loading

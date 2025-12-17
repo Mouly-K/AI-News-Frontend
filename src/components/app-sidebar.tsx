@@ -4,6 +4,7 @@ import { IconInnerShadowTop } from "@tabler/icons-react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -12,6 +13,7 @@ import {
 
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
+import { ScrollArea } from "./ui/scroll-area";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -31,10 +33,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
-        <NavMain />
-        <NavSecondary className="mt-auto" />
-      </SidebarContent>
+      <ScrollArea className="overflow-y-auto">
+        <SidebarContent>
+          <NavMain />
+        </SidebarContent>
+      </ScrollArea>
+      <SidebarFooter className="mt-auto">
+        <NavSecondary className="p-0" />
+      </SidebarFooter>
     </Sidebar>
   );
 }

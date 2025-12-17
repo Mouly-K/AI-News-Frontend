@@ -37,7 +37,9 @@ export default function NewsCard({
         <h2 className={`mb-1 font-medium ${!images?.[0] && "mt-1 mb-2"}`}>
           {title}
         </h2>
-        <p className="text-muted-foreground text-sm">{description}</p>
+        <p className="text-muted-foreground text-sm line-clamp-15">
+          {description}
+        </p>
         <Separator className="my-5" />
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -54,7 +56,7 @@ export default function NewsCard({
             <Badge variant="secondary">{readTime} read</Badge>
           ) : (
             <Badge variant="secondary">
-              {source?.categories?.[0].name || categories?.[0]}
+              {source?.categories?.[0]?.name || categories?.[0]}
             </Badge>
           )}
         </div>

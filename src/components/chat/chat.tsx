@@ -113,7 +113,6 @@ export default function Chat() {
     <Drawer
       open={chat.open}
       onOpenChange={(isOpen) => setChat({ ...chat, open: isOpen })}
-      // dismissible={true}
       direction="right"
     >
       <DrawerContent className="lg:w-xl! lg:max-w-xl! h-full rounded-2xl">

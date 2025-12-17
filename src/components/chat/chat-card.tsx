@@ -8,13 +8,13 @@ export default function ChatCard({ role, content }: Message) {
     : "dark:bg-input/30 border-input w-fit self-end";
 
   return (
-    <div className={`px-3 py-2 rounded-lg border ${cardClass} border flex`}>
+    <div
+      className={`px-3 py-2 rounded-2xl border ${cardClass} border flex text-sm`}
+    >
       {role === "assistant" ? (
-        <Markdown id="llm-chat-markdown" className="text-base">
-          {content}
-        </Markdown>
+        <Markdown id="llm-chat-markdown">{content}</Markdown>
       ) : (
-        <span className="text-base text-muted-foreground">{content}</span>
+        <span className="text-muted-foreground">{content}</span>
       )}
     </div>
   );
