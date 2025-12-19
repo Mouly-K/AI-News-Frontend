@@ -92,7 +92,7 @@ function interleaveItems(
       searchQuery,
       selectedCategories,
       selectedFeeds,
-    ).map((item, itemIdx) => ({
+    )?.map((item, itemIdx) => ({
       item,
       feedData: data,
       feedIdx,
@@ -130,7 +130,7 @@ function interleaveItems(
 
   // Interleave items round-robin style
   const result = [];
-  let maxLength = Math.max(...feedItems.map((items) => items.length), 0);
+  let maxLength = Math.max(...feedItems.map((items) => items?.length), 0);
 
   for (let i = 0; i < maxLength; i++) {
     for (let j = 0; j < feedItems.length; j++) {

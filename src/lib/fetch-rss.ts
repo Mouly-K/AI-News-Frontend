@@ -24,9 +24,7 @@ export async function fetchRssFeed(feed: Partial<Feed>) {
       },
     );
 
-    const json: RssFeed = await fetchedFeed.json();
-    console.log(json);
-    return json;
+    return (await fetchedFeed.json()) as RssFeed;
   } catch {
     toast.error("Failed to fetch RSS feed", {
       description: `Failed to fetch ${new URL(feed.url).hostname}. Are you connected to the internet?`,

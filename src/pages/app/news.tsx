@@ -7,16 +7,19 @@ import { useSearch } from "@/providers/search";
 import { useSelectedCategories } from "@/providers/selected-categories";
 import { useSettings } from "@/providers/settings/helpers";
 import { useArticleModal } from "@/providers/article-modal";
+import { useSelectedFeeds } from "@/providers/selected-feeds";
+import { useChat } from "@/providers/chat";
+
 import { useRssFeeds } from "@/hooks/use-rssfeeds";
 
 import { interleaveItems } from "@/lib/news";
-import { useSelectedFeeds } from "@/providers/selected-feeds";
 
 export default function News() {
   const { searchQuery } = useSearch();
   const { selectedCategories } = useSelectedCategories();
   const { selectedFeeds } = useSelectedFeeds();
   const { setArticleModal } = useArticleModal();
+  const { setChat } = useChat();
   const { settings } = useSettings();
   // No manual memoization required with React compiler yay
   const feedQueries = useRssFeeds(settings.feeds);
@@ -56,12 +59,21 @@ export default function News() {
               key={`${feedData!.title}:${itemIdx}:${item!.title!}`}
               {...item!}
               source={feedData}
-              onClick={() =>
+              onClick={() => {
                 setArticleModal({
                   articleOpen: true,
-                  articleUrl: item!.link,
-                })
-              }
+                  modalData: {
+                    id: `${feedData?.link}:${item?.link}`,
+                    name: item!.title!,
+                    feedUrl: feedData!.link,
+                    itemLink: item!.link,
+                  },
+                });
+                setChat((chat) => ({
+                  ...chat,
+                  currentConversationId: "article",
+                }));
+              }}
             />
           );
         },

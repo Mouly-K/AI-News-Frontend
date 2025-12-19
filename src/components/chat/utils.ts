@@ -11,6 +11,10 @@ import type { ChatState } from "@/types/providers/chat";
 import type { RssFeed } from "@/types/rss-feed";
 import type { Category } from "@/types/category";
 import type { Feed } from "@/types/feed";
+import type {
+  ArticleMetaData,
+  ArticleModalState,
+} from "@/types/providers/article-modal";
 
 async function filterAndSendMessage(
   message: Message,
@@ -18,6 +22,7 @@ async function filterAndSendMessage(
   feedQueries: UseQueryResult<RssFeed | null, Error>[],
   categories: Category[],
   feeds: Feed[],
+  articleModal: ArticleModalState,
 ) {
   let body: ChatRequest = {
     model:
@@ -41,10 +46,37 @@ async function filterAndSendMessage(
       return [...articles, ...items];
     }, [] as RssArticle[]);
   } else if (chat.currentConversationId === "article") {
-    body.articleUrl = "";
+    body.articleUrl = articleModal.modalData?.itemLink;
   }
 
   await sendChatMessage(chat.currentConversationId, body);
 }
 
-export { filterAndSendMessage };
+function getArticleMetadata(
+  feedQueries: UseQueryResult<RssFeed | null, Error>[],
+  categories: Category[] = [],
+  feeds: Feed[] = [],
+) {
+  return feedQueries.reduce((articles, feedQuery) => {
+    if (!feedQuery.data || !feedQuery.data.feedUrl) return articles;
+
+    const items: ArticleMetaData[] = filterRssItems(
+      feedQuery.data,
+      "",
+      categories,
+      feeds,
+    ).map((i) => {
+      const feedUrl = feedQuery.data?.feedUrl;
+      const itemLink = i.link;
+      const name = i.title || itemLink || "";
+      // If same article comes via different feeds
+      const id = feedUrl + ":" + itemLink;
+
+      return { id, name, feedUrl, itemLink };
+    });
+
+    return [...articles, ...items];
+  }, [] as ArticleMetaData[]);
+}
+
+export { filterAndSendMessage, getArticleMetadata };

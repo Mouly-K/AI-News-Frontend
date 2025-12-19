@@ -4,7 +4,7 @@ import type { ArticleModalProviderState } from "@/types/providers/article-modal"
 const initialState: ArticleModalProviderState = {
   articleModal: {
     articleOpen: false,
-    articleUrl: null,
+    modalData: null,
   },
   setArticleModal: () => null,
 };

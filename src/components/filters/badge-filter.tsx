@@ -28,19 +28,24 @@ export function FilterItem<T extends GT>({
   item,
   selectedItems,
   setSelectedItems,
+  type = "multi-select",
 }: {
   item: T;
   selectedItems: T[];
-  setSelectedItems: Dispatch<SetStateAction<T[]>>;
+  setSelectedItems: Dispatch<SetStateAction<T[]>> | ((items: T[]) => void);
+  type?: "multi-select" | "single-select";
 }) {
-  const sourceHostname = item?.url ? new URL(item?.url).hostname : undefined;
+  const url = item?.url || item?.feedUrl;
+  const sourceHostname = url ? new URL(url).hostname : undefined;
 
   return (
     <CommandItem
       key={item.id}
-      onSelect={() =>
-        setSelectedItems((items: T[]) => toggleItemSelection(items, item))
-      }
+      onSelect={() => {
+        type === "multi-select"
+          ? setSelectedItems(toggleItemSelection(selectedItems, item))
+          : setSelectedItems([item]);
+      }}
     >
       {sourceHostname && (
         <Avatar className="h-4 w-4">
@@ -51,7 +56,7 @@ export function FilterItem<T extends GT>({
           />
         </Avatar>
       )}
-      <span className="text-sm">{item.name}</span>
+      <span className="text-sm truncate">{item.name}</span>
       <Check
         className={cn(
           "ml-auto",
@@ -71,6 +76,7 @@ export function BadgeFilter<T extends GT>({
   selectedItems,
   setSelectedItems,
   variant = "default",
+  type = "multi-select",
 }: {
   title: string;
   emptyMessage: string;
@@ -78,8 +84,9 @@ export function BadgeFilter<T extends GT>({
   isLoading: boolean;
   isError: boolean;
   selectedItems: T[];
-  setSelectedItems: Dispatch<SetStateAction<T[]>>;
+  setSelectedItems: Dispatch<SetStateAction<T[]>> | ((items: T[]) => void);
   variant?: "default" | "hidden";
+  type?: "multi-select" | "single-select";
 }) {
   const clearAll = () => setSelectedItems([]);
 
@@ -161,6 +168,7 @@ export function BadgeFilter<T extends GT>({
                       item={item}
                       selectedItems={selectedItems}
                       setSelectedItems={setSelectedItems}
+                      type={type}
                     />
                   ))}
                 </CommandGroup>
@@ -185,19 +193,22 @@ export function BadgeFilter<T extends GT>({
       {variant === "hidden" &&
         selectedItems.length <= 2 &&
         selectedItems.map((item) => {
-          const sourceHostname = item.url ? new URL(item.url).hostname : null;
+          const url = item.url || item.feedUrl;
+          const sourceHostname = url ? new URL(url).hostname : null;
 
           return (
             <Button
               key={item.id}
               variant="secondary"
               size="sm"
-              className="h-8 px-3 rounded-full tabular-nums"
-              onClick={() =>
-                setSelectedItems((items: T[]) =>
-                  toggleItemSelection(items, item),
-                )
-              }
+              className="h-8 px-3 rounded-full tabular-nums max-w-xs"
+              onClick={() => {
+                if (type === "multi-select") {
+                  setSelectedItems(toggleItemSelection(selectedItems, item));
+                } else {
+                  setSelectedItems([]);
+                }
+              }}
             >
               {sourceHostname && (
                 <Avatar className="h-4 w-4">
@@ -208,7 +219,7 @@ export function BadgeFilter<T extends GT>({
                   />
                 </Avatar>
               )}
-              {item.name}
+              <p className="truncate">{item.name}</p>
               <X />
             </Button>
           );

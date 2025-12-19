@@ -21,7 +21,5 @@ export async function fetchArticle(articleUrl: string) {
     },
   );
 
-  const json: Article = await article.json();
-  console.log(json);
-  return json;
+  return (await article.json()) as Article;
 }

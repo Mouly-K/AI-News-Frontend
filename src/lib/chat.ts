@@ -16,8 +16,6 @@ export async function sendChatMessage(
   id: string,
   data: ChatRequest,
 ): Promise<{ id: string; success: boolean }> {
-  console.log("Sending data: ", data);
-
   const res = await fetch(`${BASE_URL}/chat/send/${id}`, {
     method: "POST",
     headers: {

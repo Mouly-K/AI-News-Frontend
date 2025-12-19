@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { toast } from "sonner";
 import type { ChatResponse, Message } from "ollama/src/interfaces.js";
 
 import { Drawer, DrawerContent, DrawerFooter } from "@/components/ui/drawer";
@@ -15,6 +16,7 @@ import { useSettings } from "@/providers/settings";
 import { useSelectedCategories } from "@/providers/selected-categories";
 import { useSelectedFeeds } from "@/providers/selected-feeds";
 import { useChat, updateChatWithNewMessage } from "@/providers/chat";
+import { useArticleModal } from "@/providers/article-modal";
 
 import { STREAM_STATUS, type StreamStatus } from "@/types/chat/stream-status";
 
@@ -39,6 +41,7 @@ export default function Chat() {
   const { selectedFeeds } = useSelectedFeeds();
 
   const { chat, setChat } = useChat();
+  const { articleModal } = useArticleModal();
 
   // For scrolling to the bottom of chat container
   // as text streams in
@@ -55,7 +58,6 @@ export default function Chat() {
 
   // For switching the chat room "general" | "article"
   useEffect(() => {
-    console.log("EventSource open for: ", chat.currentConversationId);
     const eventSource = new EventSource(
       `http://localhost:3000/chat/events/${chat.currentConversationId}`,
     );
@@ -98,6 +100,13 @@ export default function Chat() {
   }, [chat.currentConversationId]);
 
   function handleSubmit() {
+    if (chat.currentConversationId === "article" && !articleModal.modalData) {
+      toast.info("Select an article", {
+        description:
+          "An article must be selected in article mode. Switch to general mode for general queries",
+      });
+      return;
+    }
     const message: Message = {
       role: "user",
       content: query,
@@ -110,6 +119,7 @@ export default function Chat() {
       feedQueries,
       selectedCategories,
       selectedFeeds,
+      articleModal,
     );
   }
 
@@ -137,8 +147,8 @@ export default function Chat() {
           </div>
         </ScrollArea>
         <DrawerFooter>
-          {/*<DrawerClose></DrawerClose>*/}
           <ChatBox
+            feedQueries={feedQueries}
             query={query}
             setQuery={setQuery}
             onSubmit={handleSubmit}

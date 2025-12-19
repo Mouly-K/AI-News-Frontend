@@ -16,7 +16,7 @@ import { useArticleModal } from "@/providers/article-modal";
 export default function Article() {
   const { articleModal, setArticleModal } = useArticleModal();
   const { data, isLoading, isError } = useArticle(
-    articleModal.articleUrl || "",
+    articleModal.modalData?.itemLink || "",
   );
 
   return (

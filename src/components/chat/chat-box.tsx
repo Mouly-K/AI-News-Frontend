@@ -28,11 +28,18 @@ import { useSearch } from "@/providers/search";
 import { useSelectedCategories } from "@/providers/selected-categories";
 import { useSelectedFeeds } from "@/providers/selected-feeds";
 
+import type { UseQueryResult } from "@tanstack/react-query";
+import type { RssFeed } from "@/types/rss-feed";
+import { getArticleMetadata } from "./utils";
+import { useArticleModal } from "@/providers/article-modal";
+import type { ArticleMetaData } from "@/types/providers/article-modal";
+
 interface ChatBoxProps {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   onSubmit: () => void;
   disabled: boolean;
+  feedQueries: UseQueryResult<RssFeed | null, Error>[];
 }
 
 export default function ChatBox({
@@ -40,11 +47,13 @@ export default function ChatBox({
   setQuery,
   onSubmit,
   disabled = false,
+  feedQueries,
 }: ChatBoxProps) {
   const { searchQuery, setSearchQuery } = useSearch();
   const { selectedCategories, setSelectedCategories } = useSelectedCategories();
   const { selectedFeeds, setSelectedFeeds } = useSelectedFeeds();
   const { chat, setChat } = useChat();
+  const { articleModal, setArticleModal } = useArticleModal();
 
   const { data: models, isLoading, isError } = useModels();
   const {
@@ -77,34 +86,74 @@ export default function ChatBox({
         <InputGroupAddon align="block-start">
           <ChatContext
             disabled={disabled}
+            chat={chat}
+            setChat={setChat}
             categories={categories}
             selectedCategories={selectedCategories}
             setSelectedCategories={setSelectedCategories}
             feeds={feeds}
             selectedFeeds={selectedFeeds}
             setSelectedFeeds={setSelectedFeeds}
+            articleModal={articleModal}
+            setArticleModal={setArticleModal}
+            feedQueries={feedQueries}
           />
           <div className="flex flex-1 items-center gap-2 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <BadgeFilter
-              variant="hidden"
-              title="Categories"
-              emptyMessage="No categories found."
-              items={categories}
-              isLoading={categoriesLoading}
-              isError={categoriesError}
-              selectedItems={selectedCategories}
-              setSelectedItems={setSelectedCategories}
-            />
-            <BadgeFilter
-              variant="hidden"
-              title="Sources"
-              emptyMessage="No sources found."
-              items={feeds}
-              isLoading={feedsLoading}
-              isError={feedsError}
-              selectedItems={selectedFeeds}
-              setSelectedItems={setSelectedFeeds}
-            />
+            {chat.currentConversationId === "general" && (
+              <>
+                <BadgeFilter
+                  variant="hidden"
+                  title="Categories"
+                  emptyMessage="No categories found."
+                  items={categories}
+                  isLoading={categoriesLoading}
+                  isError={categoriesError}
+                  selectedItems={selectedCategories}
+                  setSelectedItems={setSelectedCategories}
+                />
+                <BadgeFilter
+                  variant="hidden"
+                  title="Sources"
+                  emptyMessage="No sources found."
+                  items={feeds}
+                  isLoading={feedsLoading}
+                  isError={feedsError}
+                  selectedItems={selectedFeeds}
+                  setSelectedItems={setSelectedFeeds}
+                />
+              </>
+            )}
+            {chat.currentConversationId === "article" && (
+              <BadgeFilter
+                variant="hidden"
+                type="single-select"
+                title="Articles"
+                emptyMessage="No articles found"
+                items={getArticleMetadata(feedQueries)}
+                isLoading={feedQueries.some((feedQuery) => feedQuery.isLoading)}
+                isError={feedQueries.some((feedQuery) => feedQuery.isError)}
+                selectedItems={
+                  articleModal.modalData ? [articleModal.modalData] : []
+                }
+                setSelectedItems={(items: ArticleMetaData[]) => {
+                  if (items.length === 0) {
+                    setChat((chat) => ({
+                      ...chat,
+                      currentConversationId: "general",
+                    }));
+                    return;
+                  }
+                  setArticleModal((modalState) => ({
+                    ...modalState,
+                    modalData: items[0],
+                  }));
+                  setChat((chat) => ({
+                    ...chat,
+                    currentConversationId: "article",
+                  }));
+                }}
+              />
+            )}
           </div>
         </InputGroupAddon>
         <InputGroupTextarea

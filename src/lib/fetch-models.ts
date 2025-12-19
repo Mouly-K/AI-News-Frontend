@@ -15,8 +15,5 @@ export async function fetchModels(): Promise<ModelResponse[]> {
     },
   });
 
-  const json: ModelResponse[] = (await response.json())
-    .models as ModelResponse[];
-  console.log(json);
-  return json;
+  return (await response.json()).models as ModelResponse[];
 }

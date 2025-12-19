@@ -1,6 +1,13 @@
+export type ArticleMetaData = {
+  id: string;
+  name: string;
+  feedUrl?: string;
+  itemLink: string;
+};
+
 export type ArticleModalState = {
   articleOpen: boolean;
-  articleUrl: string | null;
+  modalData: ArticleMetaData | null;
 };
 
 export type ArticleModalProviderState = {
