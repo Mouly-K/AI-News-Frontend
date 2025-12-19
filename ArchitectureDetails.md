@@ -20,7 +20,7 @@ Backend (Node + Express)
 ✓ LLM Query Endpoint
 ✓ Accepts feed items (title + description) from frontend
 ✓ Embeds with nomic-embed-text
-✓ Runs semantic similarity
+✓ Runs semantic cosine similarity
 ✓ Uses local LLM (Gemma 3 270M via Ollama) to answer queries
 ✓ Article Analysis Endpoint
 ✓ Frontend sends full HTML from article link
@@ -47,8 +47,6 @@ Backend
 1. Node.js + Express (REST API)
 2. sqlite3 (light user-storage only)
 3. ollama (local LLM runtime)
-4. gemma3:270m for generation
-5. nomic-embed-text for embeddings
-6. FAISS-lite (in-memory) (vector search for feed items)
-7. cheerio (optional HTML parsing for server-side extraction)
-8. cors, dotenv (general utilities)
+4. gpt-oss:20b for generation
+5. qwen3 for embeddings
+6. In-memory vector store and search

@@ -1,3 +1,5 @@
+import type { RefObject } from "react";
+
 const DEFAULT_MAX_AGE = 300;
 
 // General helpers
@@ -49,4 +51,17 @@ function isNearBottom(el: HTMLElement, threshold = 80) {
   return el.scrollHeight - el.scrollTop - el.clientHeight < threshold;
 }
 
-export { indexBy, filterObject, extractMaxAge, isNearBottom };
+function bindKey(ref: RefObject<HTMLElement | null>, key: string) {
+  return () => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === key && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        ref.current?.click();
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  };
+}
+
+export { indexBy, filterObject, extractMaxAge, isNearBottom, bindKey };

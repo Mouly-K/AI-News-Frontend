@@ -100,6 +100,14 @@ export default function Chat() {
   }, [chat.currentConversationId]);
 
   function handleSubmit() {
+    if (query.trim() === "") {
+      toast.info("Query empty", {
+        description:
+          "Type something for a tranformative news consuming experience",
+      });
+      return;
+    }
+
     if (chat.currentConversationId === "article" && !articleModal.modalData) {
       toast.info("Select an article", {
         description:

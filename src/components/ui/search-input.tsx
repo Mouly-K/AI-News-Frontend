@@ -7,6 +7,8 @@ import {
 } from "@/components/ui/input-group";
 import { Kbd } from "@/components/ui/kbd";
 
+import { bindKey } from "@/utils";
+
 type SearchInputProps = {
   value: string;
   onChange: React.Dispatch<React.SetStateAction<string>>;
@@ -37,16 +39,7 @@ function SearchInput({
     }, debounce);
   }
 
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        inputRef.current?.focus();
-      }
-    };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
+  useEffect(bindKey(inputRef, "k"), []);
 
   useEffect(() => {
     setQuery(value); // To sync external value changes with internal query

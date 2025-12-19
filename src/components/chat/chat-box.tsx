@@ -33,6 +33,7 @@ import type { RssFeed } from "@/types/rss-feed";
 import { getArticleMetadata } from "./utils";
 import { useArticleModal } from "@/providers/article-modal";
 import type { ArticleMetaData } from "@/types/providers/article-modal";
+import { bindKey } from "@/utils";
 
 interface ChatBoxProps {
   query: string;
@@ -69,16 +70,7 @@ export default function ChatBox({
 
   const sendRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        sendRef.current?.click();
-      }
-    };
-    document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
-  }, []);
+  useEffect(bindKey(sendRef, "Enter"), []);
 
   return (
     <>

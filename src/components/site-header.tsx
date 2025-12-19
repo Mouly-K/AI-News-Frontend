@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { MessageCircle } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
@@ -13,13 +14,23 @@ import { useSelectedFeeds } from "@/providers/selected-feeds";
 import { useFeeds } from "@/hooks/use-feeds";
 import { useCategories } from "@/hooks/use-categories";
 import { useChat } from "@/providers/chat";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+import { bindKey } from "@/utils";
 
 export function SiteHeader() {
   const { searchQuery, setSearchQuery } = useSearch();
   const { selectedCategories, setSelectedCategories } = useSelectedCategories();
   const { selectedFeeds, setSelectedFeeds } = useSelectedFeeds();
   const { setChat } = useChat();
+
+  const chatRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(bindKey(chatRef, ";"), []);
 
   const {
     data: feeds = [],
@@ -70,6 +81,7 @@ export function SiteHeader() {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
+                ref={chatRef}
                 className="h-8"
                 onClick={() =>
                   setChat((chat) => ({ ...chat, open: !chat.open }))
