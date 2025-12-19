@@ -22,7 +22,7 @@ export default function App() {
       <AppSidebar variant="inset" />
       <SidebarInset>
         <SiteHeader />
-        {/*<News />*/}
+        <News />
         <Chat />
       </SidebarInset>
       <Article />

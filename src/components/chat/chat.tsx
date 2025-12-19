@@ -1,31 +1,25 @@
 import { useState, useEffect, useRef } from "react";
 import type { ChatResponse, Message } from "ollama/src/interfaces.js";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
+
+import { Drawer, DrawerContent, DrawerFooter } from "@/components/ui/drawer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import ChatBox from "@/components/chat/chat-box";
 import ChatCard from "@/components/chat/chat-card";
+import Chatheader from "@/components/chat/chat-header";
+import { ChatEmpty } from "@/components/chat/chat-empty";
 
-import {
-  DEFAULT_MODEL,
-  useChat,
-  updateChatWithNewMessage,
-} from "@/providers/chat";
+import { useRssFeeds } from "@/hooks/use-rssfeeds";
 
-import { sendChatMessage } from "@/lib/chat";
+import { useSettings } from "@/providers/settings";
+import { useSelectedCategories } from "@/providers/selected-categories";
+import { useSelectedFeeds } from "@/providers/selected-feeds";
+import { useChat, updateChatWithNewMessage } from "@/providers/chat";
+
 import { STREAM_STATUS, type StreamStatus } from "@/types/chat/stream-status";
 
 import { isNearBottom } from "@/utils";
-import Chatheader from "./chat-header";
-import { ChatEmpty } from "./chat-empty";
+import { filterAndSendMessage } from "./utils";
 
 export default function Chat() {
   const [query, setQuery] = useState("");
@@ -39,8 +33,15 @@ export default function Chat() {
   const chatBottomRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
+  const { settings } = useSettings();
+  const feedQueries = useRssFeeds(settings.feeds);
+  const { selectedCategories } = useSelectedCategories();
+  const { selectedFeeds } = useSelectedFeeds();
+
   const { chat, setChat } = useChat();
 
+  // For scrolling to the bottom of chat container
+  // as text streams in
   useEffect(() => {
     const container = chatContainerRef.current;
     if (!container) return;
@@ -52,6 +53,7 @@ export default function Chat() {
     }
   }, [streamText]);
 
+  // For switching the chat room "general" | "article"
   useEffect(() => {
     console.log("EventSource open for: ", chat.currentConversationId);
     const eventSource = new EventSource(
@@ -95,18 +97,20 @@ export default function Chat() {
     };
   }, [chat.currentConversationId]);
 
-  async function handleSubmit() {
+  function handleSubmit() {
     const message: Message = {
       role: "user",
       content: query,
     };
 
     setChat((chat) => updateChatWithNewMessage(chat, message));
-    await sendChatMessage(chat.currentConversationId, {
-      model:
-        chat.conversations[chat.currentConversationId]?.model || DEFAULT_MODEL,
+    filterAndSendMessage(
       message,
-    });
+      chat,
+      feedQueries,
+      selectedCategories,
+      selectedFeeds,
+    );
   }
 
   return (

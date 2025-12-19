@@ -1,5 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { Search } from "lucide-react";
+import { SearchIcon } from "lucide-react";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Kbd } from "@/components/ui/kbd";
 
 type SearchInputProps = {
   value: string;
@@ -15,11 +21,11 @@ function SearchInput({
   value,
   onChange,
   debounce = 0,
-  className,
-  inputClassName,
   placeholderKey,
   placeholder,
 }: SearchInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const [query, setQuery] = useState("");
 
   const timeout = useRef<number>(undefined);
@@ -32,17 +38,24 @@ function SearchInput({
   }
 
   useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
+
+  useEffect(() => {
     setQuery(value); // To sync external value changes with internal query
   }, [value]);
 
   return (
-    <div
-      className={`flex items-center border border-input rounded-md px-3 w-37.5 lg:w-62.5 gap-2 ${
-        className && className
-      }`}
-    >
-      <Search className="size-4 opacity-50" />
-      <input
+    <InputGroup className="max-w-xs bg-transparent! rounded-md">
+      <InputGroupInput
+        ref={inputRef}
         placeholder={
           placeholderKey
             ? `Search ${placeholderKey}...`
@@ -51,11 +64,16 @@ function SearchInput({
         type="search"
         value={query}
         onChange={handleChange}
-        className={`placeholder:text-muted-foreground flex w-full bg-transparent text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50 h-8 border-none rounded-none ${
-          inputClassName && inputClassName
-        }`}
+        className="bg-transparent"
       />
-    </div>
+      <InputGroupAddon>
+        <SearchIcon />
+      </InputGroupAddon>
+      <InputGroupAddon align="inline-end">
+        <Kbd>⌘</Kbd>
+        <Kbd>K</Kbd>
+      </InputGroupAddon>
+    </InputGroup>
   );
 }
 

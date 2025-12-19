@@ -1,4 +1,4 @@
-import type { Message } from "ollama/src/interfaces.js";
+import type { ChatRequest } from "@/types/chat/chat-request";
 import { toast } from "sonner";
 
 const BASE_URL =
@@ -14,11 +14,10 @@ const ERRORS = {
  */
 export async function sendChatMessage(
   id: string,
-  data: {
-    model: string;
-    message: Message;
-  },
+  data: ChatRequest,
 ): Promise<{ id: string; success: boolean }> {
+  console.log("Sending data: ", data);
+
   const res = await fetch(`${BASE_URL}/chat/send/${id}`, {
     method: "POST",
     headers: {

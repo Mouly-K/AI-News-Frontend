@@ -4,7 +4,7 @@ import type { Message } from "ollama/src/interfaces.js";
 
 // Using smaller parameter gemma for general chat and queries
 // Using larger parameter gpt-oss for article chat since it's better with more data
-const DEFAULT_MODEL = "gemma3:270m";
+const DEFAULT_MODEL = "gpt-oss:20b";
 const DEFAULT_ARTICLE_MODEL = "gpt-oss:20b";
 
 const initialState: ChatProviderState = {
