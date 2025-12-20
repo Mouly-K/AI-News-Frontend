@@ -283,6 +283,8 @@ A lightweight, high-performance AI news assistant that aggregates articles from 
 
 ## ⚙️ Installation
 
+> Make sure you have Node.js 25 or above installed. Needs backend to be fully online to work, please setup backend first. Instructions are provided in the backend repository (Refer to above section)
+
 ```bash
 # Clone the repository
 git clone https://github.com/Mouly-K/AI-News-Frontend.git
@@ -293,8 +295,6 @@ npm install
 # Start the development server
 npm run dev
 ```
-
-> 📘 Detailed setup instructions can be found in the dedicated installation guide.
 
 ---
 
