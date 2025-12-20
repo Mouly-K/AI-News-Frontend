@@ -15,11 +15,11 @@ A lightweight, high-performance AI news assistant that aggregates articles from 
 * 📡 Real-time AI streaming via Server-Sent Events (SSE)
 * 🧩 Scalable architecture, MVP-first design
 
----
-
 ## 📹 Preview / Video Demo
 
 [`Full quality Google Drive Link`](https://drive.google.com/file/d/1QjobvwF2uPu272tIWasJx3fA6kZsZqdZ/view)
+
+---
 
 ## 📸 Screenshots & UI Walkthrough
 
@@ -31,11 +31,13 @@ A lightweight, high-performance AI news assistant that aggregates articles from 
 
 **Landing Page — Masonry Feed (Desktop)**
 
-<img
-src="assets/Landing With Articles in Masonry Layout.png"
-alt="Landing page with articles displayed in a masonry layout"
-width="100%"
-/>
+<a href="assets/Landing With Articles in Masonry Layout.png" target="_blank" rel="noopener noreferrer">
+  <img
+    src="assets/Landing With Articles in Masonry Layout.png"
+    alt="Landing page with articles displayed in a masonry layout"
+    width="100%"
+  />
+</a>
 
 ---
 
@@ -43,17 +45,28 @@ width="100%"
 
 **Article View — Clean & Distraction-Free (Desktop)**
 
-<img
-src="assets/Article UI.png"
-alt="Clean article reading interface"
-width="100%"
-/>
+<!-- Preview image (always visible) -->
 
-<img
-src="assets/Article UI 2.png"
-alt="Article view showing continued content"
-width="100%"
-/>
+<a href="assets/Article UI.png" target="_blank" rel="noopener noreferrer">
+  <img
+    src="assets/Article UI.png"
+    alt="Clean article reading interface"
+    width="100%"
+  />
+</a>
+
+<details>
+  <summary><strong>View more reading screenshots</strong></summary>
+
+  <a href="assets/Article UI 2.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/Article UI 2.png"
+      alt="Article view showing continued content"
+      width="100%"
+    />
+  </a>
+
+</details>
 
 ---
 
@@ -61,35 +74,44 @@ width="100%"
 
 **General AI Chat (Desktop)**
 
-<img
-src="assets/General Chat 1.png"
-alt="General AI chat interface for news queries"
-width="100%"
-/>
+<!-- Preview -->
 
-**Context Picker — Adding Sources, Categories & Articles**
+<a href="assets/General Chat 1.png" target="_blank" rel="noopener noreferrer">
+  <img
+    src="assets/General Chat 1.png"
+    alt="General AI chat interface for news queries"
+    width="100%"
+  />
+</a>
 
-<img
-src="assets/General Chat with Context Picker Open.png"
-alt="Context picker for selecting sources, categories, and articles"
-width="100%"
-/>
+<details>
+  <summary><strong>View more AI chat examples</strong></summary>
 
-**Filtered Context — Source & Category Aware Chat**
+  <a href="assets/General Chat with Context Picker Open.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/General Chat with Context Picker Open.png"
+      alt="Context picker for selecting sources, categories, and articles"
+      width="100%"
+    />
+  </a>
 
-<img
-src="assets/General Chat with Source and Category Context Filter.png"
-alt="AI chat with source and category filters applied"
-width="100%"
-/>
+  <a href="assets/General Chat with Source and Category Context Filter.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/General Chat with Source and Category Context Filter.png"
+      alt="AI chat with source and category filters applied"
+      width="100%"
+    />
+  </a>
 
-**Natural Language Queries**
+  <a href="assets/Chat UI but asking more general humane questions.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/Chat UI but asking more general humane questions.png"
+      alt="AI chat responding to natural language questions"
+      width="100%"
+    />
+  </a>
 
-<img
-src="assets/Chat UI but asking more general humane questions.png"
-alt="AI chat responding to natural language questions"
-width="100%"
-/>
+</details>
 
 ---
 
@@ -97,17 +119,28 @@ width="100%"
 
 **Article Chat Mode — Deep Analysis**
 
-<img
-src="assets/Article Chat with deeper analysis.png"
-alt="Article-specific AI chat providing deep analysis"
-width="100%"
-/>
+<!-- Preview -->
 
-<img
-src="assets/Article Chat with deeper analysis 2.png"
-alt="Continued deep article analysis in AI chat"
-width="100%"
-/>
+<a href="assets/Article Chat with deeper analysis.png" target="_blank" rel="noopener noreferrer">
+  <img
+    src="assets/Article Chat with deeper analysis.png"
+    alt="Article-specific AI chat providing deep analysis"
+    width="100%"
+  />
+</a>
+
+<details>
+  <summary><strong>View more deep-analysis screenshots</strong></summary>
+
+  <a href="assets/Article Chat with deeper analysis 2.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/Article Chat with deeper analysis 2.png"
+      alt="Continued deep article analysis in AI chat"
+      width="100%"
+    />
+  </a>
+
+</details>
 
 ---
 
@@ -115,43 +148,56 @@ width="100%"
 
 **Feed Management**
 
-<img
-src="assets/Feed Management UI 1.png"
-alt="RSS feed management interface"
-width="100%"
-/>
+<!-- Preview -->
 
-<img
-src="assets/Feed Management UI 2.png"
-alt="Additional feed management options"
-width="100%"
-/>
+<a href="assets/Feed Management UI 1.png" target="_blank" rel="noopener noreferrer">
+  <img
+    src="assets/Feed Management UI 1.png"
+    alt="RSS feed management interface"
+    width="100%"
+  />
+</a>
 
-**Category Management**
+<details>
+  <summary><strong>View more management controls</strong></summary>
 
-<img
-src="assets/Categories Maagement UI.png"
-alt="Category management user interface"
-width="100%"
-/>
+  <a href="assets/Feed Management UI 2.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/Feed Management UI 2.png"
+      alt="Additional feed management options"
+      width="100%"
+    />
+  </a>
 
-**Source & Category Filters**
+  <a href="assets/Categories Maagement UI.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/Categories Maagement UI.png"
+      alt="Category management user interface"
+      width="100%"
+    />
+  </a>
 
-<img
-src="assets/Source & Categories Filter.png"
-alt="Source and category filtering panel"
-width="100%"
-/>
+  <a href="assets/Source & Categories Filter.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/Source & Categories Filter.png"
+      alt="Source and category filtering panel"
+      width="100%"
+    />
+  </a>
+
+</details>
 
 ---
 
 ### 6️⃣ Responsive Design (Mobile — iPhone 14 Pro Max)
 
-|                                                                                                          |                                                                                                |
-| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| <img src="assets/Fully responsive.png" alt="Mobile view of the app on iPhone 14 Pro Max" width="100%" /> | <img src="assets/Fully responsive 2.png" alt="Responsive mobile layout view 2" width="100%" /> |
-| <img src="assets/Fully responsive 3.png" alt="Responsive mobile layout view 3" width="100%" />           | <img src="assets/Fully responsive 4.png" alt="Responsive mobile layout view 4" width="100%" /> |
-| <img src="assets/Fully responsive 5.png" alt="Responsive mobile layout view 5" width="100%" />           | <img src="assets/Fully responsive 6.png" alt="Responsive mobile layout view 6" width="100%" /> |
+> **Not collapsible (as requested)**
+
+|                                                                                                                      |                                                                                                                      |
+| -------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| <a href="assets/Fully responsive.png" target="_blank"><img src="assets/Fully responsive.png" width="100%" /></a>     | <a href="assets/Fully responsive 2.png" target="_blank"><img src="assets/Fully responsive 2.png" width="100%" /></a> |
+| <a href="assets/Fully responsive 3.png" target="_blank"><img src="assets/Fully responsive 3.png" width="100%" /></a> | <a href="assets/Fully responsive 4.png" target="_blank"><img src="assets/Fully responsive 4.png" width="100%" /></a> |
+| <a href="assets/Fully responsive 5.png" target="_blank"><img src="assets/Fully responsive 5.png" width="100%" /></a> | <a href="assets/Fully responsive 6.png" target="_blank"><img src="assets/Fully responsive 6.png" width="100%" /></a> |
 
 ---
 
@@ -159,17 +205,28 @@ width="100%"
 
 **Light Theme**
 
-<img
-src="assets/Light Theme 1.png"
-alt="Light theme version of the application"
-width="100%"
-/>
+<!-- Preview -->
 
-<img
-src="assets/Light Theme 2.png"
-alt="Light theme with different UI state"
-width="100%"
-/>
+<a href="assets/Light Theme 1.png" target="_blank" rel="noopener noreferrer">
+  <img
+    src="assets/Light Theme 1.png"
+    alt="Light theme version of the application"
+    width="100%"
+  />
+</a>
+
+<details>
+  <summary><strong>View more light theme screenshots</strong></summary>
+
+  <a href="assets/Light Theme 2.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/Light Theme 2.png"
+      alt="Light theme with different UI state"
+      width="100%"
+    />
+  </a>
+
+</details>
 
 ---
 
