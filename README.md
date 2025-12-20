@@ -29,144 +29,149 @@ A lightweight, high-performance AI news assistant that aggregates articles from 
 
 ---
 
-### 1️⃣ Landing Experience (First Impression)
+### 1️⃣ Landing Experience
 
 **Landing Page — Masonry Feed (Desktop)**
-*Scannable, fast-loading article feed optimized for discovery*
 
-![Landing Page - Masonry Layout](assets/Landing With Articles in Masonry Layout.png)
+<img
+src="assets/Landing With Articles in Masonry Layout.png"
+alt="Landing page with articles displayed in a masonry layout"
+width="100%"
+/>
 
 ---
 
-### 2️⃣ Reading Experience (Core Value)
+### 2️⃣ Reading Experience
 
 **Article View — Clean & Distraction-Free (Desktop)**
-*Ad-free, readable article layout with focus on content*
 
-```md
-![Article UI](Frontend/assets/Article UI.png)
-```
+<img
+src="assets/Article UI.png"
+alt="Clean article reading interface"
+width="100%"
+/>
 
-```md
-![Article UI - Continued](Frontend/assets/Article UI 2.png)
-```
+<img
+src="assets/Article UI 2.png"
+alt="Article view showing continued content"
+width="100%"
+/>
 
 ---
 
 ### 3️⃣ AI Chat — General Intelligence
 
 **General AI Chat (Desktop)**
-*Broad questions across multiple feeds & categories*
 
-```md
-![General Chat](Frontend/assets/General Chat 1.png)
-```
+<img
+src="assets/General Chat 1.png"
+alt="General AI chat interface for news queries"
+width="100%"
+/>
 
-**Context Picker — Adding Sources, Categories & Articles (Desktop)**
-*On-the-fly context control without breaking flow*
+**Context Picker — Adding Sources, Categories & Articles**
 
-```md
-![General Chat - Context Picker](Frontend/assets/General Chat with Context Picker Open.png)
-```
+<img
+src="assets/General Chat with Context Picker Open.png"
+alt="Context picker for selecting sources, categories, and articles"
+width="100%"
+/>
 
-**Filtered Context — Source & Category Aware Chat (Desktop)**
-*Only relevant articles are fed to the AI*
+**Filtered Context — Source & Category Aware Chat**
 
-```md
-![General Chat - Filters](Frontend/assets/General Chat with Source and Category Context Filter.png)
-```
+<img
+src="assets/General Chat with Source and Category Context Filter.png"
+alt="AI chat with source and category filters applied"
+width="100%"
+/>
 
-**Natural Language Queries (Desktop)**
-*Human-friendly prompts with streaming responses*
+**Natural Language Queries**
 
-```md
-![General Chat - Natural Queries](Frontend/assets/Chat UI but asking more general humane questions.png)
-```
+<img
+src="assets/Chat UI but asking more general humane questions.png"
+alt="AI chat responding to natural language questions"
+width="100%"
+/>
 
 ---
 
-### 4️⃣ AI Chat — Deep Article Analysis (Differentiator)
+### 4️⃣ AI Chat — Deep Article Analysis
 
-**Article Chat Mode — Deep Analysis (Desktop)**
-*Automatic switch from “General” to “Article” mode*
+**Article Chat Mode — Deep Analysis**
 
-```md
-![Article Chat - Deep Analysis](Frontend/assets/Article Chat with deeper analysis.png)
-```
+<img
+src="assets/Article Chat with deeper analysis.png"
+alt="Article-specific AI chat providing deep analysis"
+width="100%"
+/>
 
-```md
-![Article Chat - Deep Analysis 2](Frontend/assets/Article Chat with deeper analysis 2.png)
-```
+<img
+src="assets/Article Chat with deeper analysis 2.png"
+alt="Continued deep article analysis in AI chat"
+width="100%"
+/>
 
 ---
 
 ### 5️⃣ Power-User Controls & Management
 
-**Feed Management (Desktop)**
-*Subscribe, organize, and manage RSS feeds*
+**Feed Management**
 
-```md
-![Feed Management UI](Frontend/assets/Feed Management UI 1.png)
-```
+<img
+src="assets/Feed Management UI 1.png"
+alt="RSS feed management interface"
+width="100%"
+/>
 
-```md
-![Feed Management UI - Continued](Frontend/assets/Feed Management UI 2.png)
-```
+<img
+src="assets/Feed Management UI 2.png"
+alt="Additional feed management options"
+width="100%"
+/>
 
-**Category Management (Desktop)**
-*Custom categorization for better signal-to-noise*
+**Category Management**
 
-```md
-![Category Management UI](Frontend/assets/Categories Maagement UI.png)
-```
+<img
+src="assets/Categories Maagement UI.png"
+alt="Category management user interface"
+width="100%"
+/>
 
-**Source & Category Filters (Desktop)**
-*Instant filtering shared between Feed & Chat*
+**Source & Category Filters**
 
-```md
-![Source & Category Filter](Frontend/assets/Source & Categories Filter.png)
-```
-
----
-
-### 6️⃣ Responsive Design (Mobile Experience)
-
-> *All screenshots below are from an **iPhone 14 Pro Max***
-
-```md
-![Mobile View 1](Frontend/assets/Fully responsive.png)
-```
-
-```md
-![Mobile View 2](Frontend/assets/Fully responsive 2.png)
-```
-
-```md
-![Mobile View 3](Frontend/assets/Fully responsive 3.png)
-```
-
-```md
-![Mobile View 4](Frontend/assets/Fully responsive 4.png)
-```
-
-```md
-![Mobile View 5](Frontend/assets/Fully responsive 5.png)
-```
+<img
+src="assets/Source & Categories Filter.png"
+alt="Source and category filtering panel"
+width="100%"
+/>
 
 ---
 
-### 7️⃣ Theme Support (Polish)
+### 6️⃣ Responsive Design (Mobile — iPhone 14 Pro Max)
 
-**Light Theme (Desktop)**
-*Fully theme-aware UI with dark & light mode support*
+|                                                                                                          |                                                                                                |
+| -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| <img src="assets/Fully responsive.png" alt="Mobile view of the app on iPhone 14 Pro Max" width="100%" /> | <img src="assets/Fully responsive 2.png" alt="Responsive mobile layout view 2" width="100%" /> |
+| <img src="assets/Fully responsive 3.png" alt="Responsive mobile layout view 3" width="100%" />           | <img src="assets/Fully responsive 4.png" alt="Responsive mobile layout view 4" width="100%" /> |
+| <img src="assets/Fully responsive 5.png" alt="Responsive mobile layout view 5" width="100%" />           | <img src="assets/Fully responsive 6.png" alt="Responsive mobile layout view 6" width="100%" /> |
 
-```md
-![Light Theme](Frontend/assets/Light Theme 1.png)
-```
+---
 
-```md
-![Light Theme - Continued](Frontend/assets/Light Theme 2.png)
-```
+### 7️⃣ Theme Support
+
+**Light Theme**
+
+<img
+src="assets/Light Theme 1.png"
+alt="Light theme version of the application"
+width="100%"
+/>
+
+<img
+src="assets/Light Theme 2.png"
+alt="Light theme with different UI state"
+width="100%"
+/>
 
 ---
 
