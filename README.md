@@ -76,16 +76,24 @@ A lightweight, high-performance AI news assistant that aggregates articles from 
 
 <!-- Preview -->
 
-<a href="assets/General Chat 1.png" target="_blank" rel="noopener noreferrer">
+<a href="assets/Chat UI but asking more general humane questions.png" target="_blank" rel="noopener noreferrer">
   <img
-    src="assets/General Chat 1.png"
-    alt="General AI chat interface for news queries"
+    src="assets/Chat UI but asking more general humane questions.png"
+    alt="AI chat responding to natural language questions"
     width="100%"
   />
 </a>
 
 <details>
   <summary><strong>View more AI chat examples</strong></summary>
+
+  <a href="assets/General Chat 1.png" target="_blank" rel="noopener noreferrer">
+    <img
+      src="assets/General Chat 1.png"
+      alt="General AI chat interface for news queries"
+      width="100%"
+    />
+  </a>
 
   <a href="assets/General Chat with Context Picker Open.png" target="_blank" rel="noopener noreferrer">
     <img
@@ -99,14 +107,6 @@ A lightweight, high-performance AI news assistant that aggregates articles from 
     <img
       src="assets/General Chat with Source and Category Context Filter.png"
       alt="AI chat with source and category filters applied"
-      width="100%"
-    />
-  </a>
-
-  <a href="assets/Chat UI but asking more general humane questions.png" target="_blank" rel="noopener noreferrer">
-    <img
-      src="assets/Chat UI but asking more general humane questions.png"
-      alt="AI chat responding to natural language questions"
       width="100%"
     />
   </a>
