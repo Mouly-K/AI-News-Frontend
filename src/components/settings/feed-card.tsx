@@ -1,6 +1,9 @@
+import { Trash2 } from "lucide-react";
+
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+
 import type { Category } from "@/types/category";
 
 interface Feed {
@@ -18,24 +21,24 @@ interface FeedCardProps {
 }
 
 export function FeedCard({ feed, onDelete }: FeedCardProps) {
+  const sourceHostname = feed?.url ? new URL(feed.url).hostname : "";
+  const favicon1 = `https://icon.horse/icon/${sourceHostname}`;
+  const favicon2 = `https://icons.duckduckgo.com/ip2/${sourceHostname}.ico`;
+
+  const imageUrl = feed.img_url ? feed.img_url : favicon1;
+  const mageAltUrl = feed.img_url ? favicon1 : favicon2;
+
   return (
     <div className="flex items-start gap-4 p-3 border rounded-lg bg-card hover:bg-accent/50 transition-colors">
       {/* Feed Image */}
       <div className="shrink-0">
-        {feed.img_url ? (
-          <img
-            src={feed.img_url}
-            alt={feed.name}
-            className="w-12 h-12 rounded object-cover"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
+        <Avatar className="h-9 w-9">
+          <AvatarImage
+            className="object-contain"
+            src={imageUrl}
+            alt={mageAltUrl}
           />
-        ) : (
-          <div className="w-12 h-12 rounded bg-muted flex items-center justify-center text-xs font-semibold text-muted-foreground">
-            {feed.name.charAt(0).toUpperCase()}
-          </div>
-        )}
+        </Avatar>
       </div>
 
       {/* Feed Info */}
