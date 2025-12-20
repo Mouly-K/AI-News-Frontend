@@ -17,11 +17,9 @@ A lightweight, high-performance AI news assistant that aggregates articles from 
 
 ---
 
-## 📸 Preview
+## 📹 Preview / Video Demo
 
 [`Full quality Google Drive Link`](https://drive.google.com/file/d/1QjobvwF2uPu272tIWasJx3fA6kZsZqdZ/view)
-
-<iframe id="ucc-17" src="https://youtube.googleapis.com/embed/?autohide=1&amp;ps=docs&amp;enablecastapi=0&amp;hl=en&amp;partnerid=30&amp;post_message_origin=https%3A%2F%2Fdrive.google.com&amp;origin=https%3A%2F%2Fdrive.google.com&amp;hbenv=apps-elements&amp;enablejsapi=1" frameborder="0" width="100%" height="100%" allow="autoplay" title="YouTube video player"></iframe>
 
 ## 📸 Screenshots & UI Walkthrough
 
